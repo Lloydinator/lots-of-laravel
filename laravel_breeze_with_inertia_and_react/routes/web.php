@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Services\Twilio;
 use Inertia\Inertia;
 
 /*
@@ -14,7 +15,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,9 +28,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+*/
 Route::get('/home', function(){
-    return Inertia::render('Home');
+    return Inertia::render('Home', [
+        //
+    ]);
 });
 
 require __DIR__.'/auth.php';
