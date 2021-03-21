@@ -14,14 +14,17 @@ class Twilio {
         $this->sid = getenv('TWILIO_ACCOUNT_SID');
         $this->token = getenv('TWILIO_AUTH_TOKEN');
         $this->twilio_number = getenv('TWILIO_PHONE_NUMBER');
+        
 
         $this->client = new Client($this->sid, $this->token);
     }
 
     public function makeConversation(){
-        $conversation = $this->client->conversations->v1->conversations->create([
-            "friendlyName" => "My Chat App"
-        ]);
+        $conversation = $this->client->conversations->v1
+                            ->conversations
+                            ->create([
+                                "friendlyName" => "My Chat App"
+                            ]);
 
         return $conversation;
     }
@@ -33,15 +36,60 @@ class Twilio {
         return $conversation;
     }
 
-    public function makeParticipant($sid){
+    public function makeParticipant($sid, $number){
         $participant = $this->client->conversations->v1
                             ->conversations($sid)
                             ->participants
                             ->create([
-                                'messagingBindingAddress' => "+16465801404",
+                                'messagingBindingAddress' => $number,
                                 'messagingBindingProxyAddress' => $this->twilio_number
                             ]);
         return $participant;
+    }
+
+    public function addNewParticipant($sid, $chat_id){
+        $participant = $this->client->conversations->v1
+                            ->conversations($sid)
+                            ->participants
+                            ->create([
+                                'identity' => $chat_id
+                            ]);
+        return $participant;
+    }
+
+    public function createMessage($sid, $author, $body){
+        $message = $this->client->conversations->v1
+                        ->conversations($sid)
+                        ->messages
+                        ->create([
+                            'author' => $author,
+                            'body' => $body
+                        ]);
+        return $message;
+    }
+
+    public function showMessage($sid, $message_id){
+        $message = $this->client->conversations->v1
+                        ->conversations($sid)
+                        ->messages($message_id)
+                        ->fetch();
+        return $message;
+    }
+
+    public function listMessages($sid){
+        $messages = $this->client->conversations->v1
+                        ->conversations($sid)
+                        ->messages
+                        ->read(20);
+        $array = array();
+        foreach($messages as $message){
+            array_push($array, [
+                $message->sid,
+                $message->author,
+                $message->body
+            ]);
+        }
+        return $array;
     }
 }
 
