@@ -5,8 +5,6 @@ import Message from './Message'
 const ChatForm = ({chat}) => {
     const [thisText, setThisText] = useState('')
     const [submitting, setSubmitting] = useState(false)
-    const [messages, setMessages] = useState([])
-    const [arrLength, setArrLength] = useState(0)
     const [chatName, setChatName] = useState('')
 
     function handleChange(e){
@@ -17,7 +15,6 @@ const ChatForm = ({chat}) => {
         e.preventDefault()
         
         Inertia.post(`/convo/${chat.sid}/create-message`, {
-            username: chat.username,
             message: thisText
         }, 
         {
@@ -52,46 +49,15 @@ const ChatForm = ({chat}) => {
         jsonFile()
     }, [])
 
-    // Fetch messages
-    async function getMessages(){
-        const response = await fetch(`/convo/${chat.sid}/messages`)
-        const json = await response.json()
-
-        if (json.messages.length > arrLength){
-            setMessages(json.messages)
-            setArrLength(json.messages.length)
-        }
-    }
-
-    /*
-    function getMessages(){
-        Inertia.get(`/`, {id: chat.sid}, {
-            onSuccess: res => {
-                console.log(res)
-            }
-        })
-    }
-    */
-
-    // Fetch messages every three seconds and clean up once component unmounts
-    useEffect(() => {
-        const interval = setInterval(() => {
-            getMessages()
-        }, 3000)
-
-        return () => clearInterval(interval)
-    }, [])
-
-    
     return (
         <div className="h-screen mx-auto lg:w-1/2 md:w-4/6 w-full mt-2">
             <h1 className="font-mono font-semibold text-black text-4xl text-center my-6">TWILCORD</h1>
             <div className="flex justify-between">
                 <p className="font-sans font-semibold text-lg text-black">{chatName}</p>
-                <p className="font-sans font-semibold text-lg text-black">{chat.username}</p>
+                <p className="font-sans font-semibold text-lg text-black">{chat.user}</p>
             </div>
             <div className="h-3/4 overflow-y-scroll px-6 py-4 mb-2 bg-gray-800 rounded-md">
-                {messages.map((message, i) => (
+                {chat.convo.map((message, i) => (
                     <Message
                         key={i} 
                         time={message[3]}

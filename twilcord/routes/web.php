@@ -23,7 +23,9 @@ Route::get('/', function(Request $request, Twilio $convo){
     }
     
     return Inertia::render('Home', [
-        'convo' => $convo->listMessages($request->session()->get('sid'))
+        'convo' => $convo->listMessages($request->session()->get('sid')),
+        'sid' => $request->session()->get('sid'),
+        'user' => $request->session()->get('user')
     ]);
 })->name('home');
 
@@ -74,7 +76,9 @@ Route::group(['prefix' => 'convo'], function(){
             Request $request, Twilio $convo, $id
         ){
         $convo = new Twilio;
-        $message = $convo->createMessage($id, $request->username, $request->message);
+        $message = $convo->createMessage(
+            $id, $request->session()->get('user'), $request->message
+        );
     
         return redirect()->back()->with('message', $message->sid); 
     });

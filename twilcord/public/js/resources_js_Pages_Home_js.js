@@ -62,20 +62,10 @@ var ChatForm = function ChatForm(_ref) {
       submitting = _useState4[0],
       setSubmitting = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState6 = _slicedToArray(_useState5, 2),
-      messages = _useState6[0],
-      setMessages = _useState6[1];
-
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-      _useState8 = _slicedToArray(_useState7, 2),
-      arrLength = _useState8[0],
-      setArrLength = _useState8[1];
-
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-      _useState10 = _slicedToArray(_useState9, 2),
-      chatName = _useState10[0],
-      setChatName = _useState10[1];
+      chatName = _useState6[0],
+      setChatName = _useState6[1];
 
   function handleChange(e) {
     setThisText(e.target.value);
@@ -84,7 +74,6 @@ var ChatForm = function ChatForm(_ref) {
   function handleSubmit(e) {
     e.preventDefault();
     _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/convo/".concat(chat.sid, "/create-message"), {
-      username: chat.username,
       message: thisText
     }, {
       onStart: function onStart() {
@@ -144,63 +133,6 @@ var ChatForm = function ChatForm(_ref) {
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     jsonFile();
-  }, []); // Fetch messages
-
-  function getMessages() {
-    return _getMessages.apply(this, arguments);
-  }
-  /*
-  function getMessages(){
-      Inertia.get(`/`, {id: chat.sid}, {
-          onSuccess: res => {
-              console.log(res)
-          }
-      })
-  }
-  */
-  // Fetch messages every three seconds and clean up once component unmounts
-
-
-  function _getMessages() {
-    _getMessages = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var response, json;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return fetch("/convo/".concat(chat.sid, "/messages"));
-
-            case 2:
-              response = _context2.sent;
-              _context2.next = 5;
-              return response.json();
-
-            case 5:
-              json = _context2.sent;
-
-              if (json.messages.length > arrLength) {
-                setMessages(json.messages);
-                setArrLength(json.messages.length);
-              }
-
-            case 7:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-    return _getMessages.apply(this, arguments);
-  }
-
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    var interval = setInterval(function () {
-      getMessages();
-    }, 3000);
-    return function () {
-      return clearInterval(interval);
-    };
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "h-screen mx-auto lg:w-1/2 md:w-4/6 w-full mt-2"
@@ -212,9 +144,9 @@ var ChatForm = function ChatForm(_ref) {
     className: "font-sans font-semibold text-lg text-black"
   }, chatName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
     className: "font-sans font-semibold text-lg text-black"
-  }, chat.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, chat.user)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "h-3/4 overflow-y-scroll px-6 py-4 mb-2 bg-gray-800 rounded-md"
-  }, messages.map(function (message, i) {
+  }, chat.convo.map(function (message, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__.default, {
       key: i,
       time: message[3],
@@ -296,8 +228,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var Home = function Home() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Chatform__WEBPACK_IMPORTED_MODULE_1__.default, null);
+var Home = function Home(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Chatform__WEBPACK_IMPORTED_MODULE_1__.default, {
+    chat: props
+  });
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);

@@ -1,9 +1,9 @@
 import React from 'react'
 import ChatForm from '../Components/Chatform'
 
-const Home = () => {
+const Home = props => {
     return (
-        <ChatForm />
+        <ChatForm chat={props} />
     )
 }
 
