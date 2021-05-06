@@ -1,4 +1,4 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Home_js"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Auth_js"],{
 
 /***/ "./node_modules/@babel/runtime/regenerator/index.js":
 /*!**********************************************************!*\
@@ -11,10 +11,10 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-/***/ "./resources/js/Components/Chatform.js":
-/*!*********************************************!*\
-  !*** ./resources/js/Components/Chatform.js ***!
-  \*********************************************/
+/***/ "./resources/js/Components/Signup.js":
+/*!*******************************************!*\
+  !*** ./resources/js/Components/Signup.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -26,7 +26,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./resources/js/Components/Message.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -48,61 +47,122 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-var ChatForm = function ChatForm(_ref) {
-  var chat = _ref.chat;
-
+var SignUp = function SignUp() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      thisText = _useState2[0],
-      setThisText = _useState2[1];
+      username = _useState2[0],
+      setUsername = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('username'),
       _useState4 = _slicedToArray(_useState3, 2),
-      submitting = _useState4[0],
-      setSubmitting = _useState4[1];
+      userType = _useState4[0],
+      setUserType = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+    sid: '',
+    name: ''
+  }),
       _useState6 = _slicedToArray(_useState5, 2),
-      messages = _useState6[0],
-      setMessages = _useState6[1];
+      convo = _useState6[0],
+      setConvo = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState8 = _slicedToArray(_useState7, 2),
-      arrLength = _useState8[0],
-      setArrLength = _useState8[1];
+      chatExists = _useState8[0],
+      setChatExists = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState10 = _slicedToArray(_useState9, 2),
-      chatName = _useState10[0],
-      setChatName = _useState10[1];
+      submitting = _useState10[0],
+      setSubmitting = _useState10[1];
 
   function handleChange(e) {
-    setThisText(e.target.value);
+    setUsername(e.target.value);
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/convo/".concat(chat.sid, "/create-message"), {
-      username: chat.username,
-      message: thisText
-    }, {
-      onStart: function onStart() {
-        setSubmitting(true);
-      },
-      onSuccess: function onSuccess(_ref2) {
-        var props = _ref2.props;
-        console.log(props);
-      },
-      onFinish: function onFinish() {
-        clearField();
-        setSubmitting(false);
-      }
-    });
-  }
+    e.preventDefault(); // If user doesn't check the box to join existing room
 
-  function clearField() {
-    setThisText('');
+    if (chatExists === false) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post('/convo/create', {}, {
+        onSuccess: function onSuccess(_ref) {
+          var props = _ref.props;
+
+          // If user joins by username
+          if (userType === 'username') {
+            _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/convo/".concat(props.flash.message, "/chat-participant/new"), {
+              username: username
+            }, {
+              onStart: function onStart() {
+                setSubmitting(true);
+              }
+              /*
+              onSuccess: res => {
+                console.log(res)
+              },
+              onFinish: () => {
+                setSubmitting(false)
+              }*/
+
+            });
+          } // If user joins by number
+          else {
+              _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/convo/".concat(props.flash.message, "/sms-participant/new"), {
+                number: username
+              }, {
+                onStart: function onStart() {
+                  setSubmitting(true);
+                }
+                /*
+                onSuccess: res => {
+                  console.log(res)
+                },
+                onFinish: () => {
+                  setSubmitting(false)
+                }*/
+
+              });
+            }
+        }
+      });
+    } // If user checks the box to join existing room
+    else {
+        // If user joins by username
+        if (userType === 'username') {
+          _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/convo/".concat(convo.sid, "/chat-participant/new"), {
+            username: username
+          }, {
+            onStart: function onStart() {
+              setSubmitting(true);
+            }
+            /*
+            onSuccess: res => {
+              console.log(res)
+            },
+            onFinish: () => {
+              setSubmitting(false)
+            }*/
+
+          });
+        } // If user joins by number
+        else {
+            _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/convo/".concat(convo.sid, "/sms-participant/new"), {
+              number: username
+            }, {
+              onStart: function onStart() {
+                setSubmitting(true);
+              }
+              /*
+              onSuccess: res => {
+                console.log(res)
+              },
+              onFinish: () => {
+                setSubmitting(false)
+              }*/
+
+            });
+          }
+      }
   } // Fetch data from sid.json
 
 
@@ -130,7 +190,10 @@ var ChatForm = function ChatForm(_ref) {
 
             case 5:
               data = _context.sent;
-              setChatName(data.chat_name);
+              setConvo({
+                sid: data.sid,
+                name: data.chat_name
+              });
 
             case 7:
             case "end":
@@ -144,145 +207,54 @@ var ChatForm = function ChatForm(_ref) {
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     jsonFile();
-  }, []); // Fetch messages
-
-  function getMessages() {
-    return _getMessages.apply(this, arguments);
-  }
-  /*
-  function getMessages(){
-      Inertia.get(`/`, {id: chat.sid}, {
-          onSuccess: res => {
-              console.log(res)
-          }
-      })
-  }
-  */
-  // Fetch messages every three seconds and clean up once component unmounts
-
-
-  function _getMessages() {
-    _getMessages = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var response, json;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return fetch("/convo/".concat(chat.sid, "/messages"));
-
-            case 2:
-              response = _context2.sent;
-              _context2.next = 5;
-              return response.json();
-
-            case 5:
-              json = _context2.sent;
-
-              if (json.messages.length > arrLength) {
-                setMessages(json.messages);
-                setArrLength(json.messages.length);
-              }
-
-            case 7:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-    return _getMessages.apply(this, arguments);
-  }
-
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    var interval = setInterval(function () {
-      getMessages();
-    }, 3000);
-    return function () {
-      return clearInterval(interval);
-    };
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    className: "h-screen mx-auto lg:w-1/2 md:w-4/6 w-full mt-2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h1", {
-    className: "font-mono font-semibold text-black text-4xl text-center my-6"
-  }, "TWILCORD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    className: "flex justify-between"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
-    className: "font-sans font-semibold text-lg text-black"
-  }, chatName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
-    className: "font-sans font-semibold text-lg text-black"
-  }, chat.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    className: "h-3/4 overflow-y-scroll px-6 py-4 mb-2 bg-gray-800 rounded-md"
-  }, messages.map(function (message, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__.default, {
-      key: i,
-      time: message[3],
-      username: message[1] == chat.username ? "Me" : message[1],
-      text: message[2]
-    });
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-    onSubmit: handleSubmit
+    className: "flex justify-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    className: "flex flex-row"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("textarea", {
-    className: "flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 outline-none resize-none",
-    rows: "1",
-    placeholder: "Place your message here...",
-    value: thisText,
-    onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    type: "submit",
+    className: "align-middle mt-20"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
+    onSubmit: handleSubmit
+  }, convo.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    className: "mt-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", {
+    className: "inline-flex items-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    type: "checkbox",
+    className: "form-checkbox",
+    onChange: function onChange() {
+      return setChatExists(!chatExists);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "ml-2"
+  }, "Join Chat \"", convo.name, "\"")))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    id: "username",
+    value: username,
+    onChange: handleChange,
+    className: "my-6 p-3 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:ring-0"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    className: "flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     className: "bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow-inner outline-none focus:outline-none mr-1 mb-1",
+    onClick: function onClick() {
+      return setUserType('username');
+    },
     disabled: submitting
-  }, submitting ? "Sending" : "Send"))));
+  }, submitting ? "Submitting..." : "Enter with Username"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+    className: "bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow-inner outline-none focus:outline-none mr-1 mb-1",
+    onClick: function onClick() {
+      return setUserType('number');
+    },
+    disabled: submitting
+  }, submitting ? "Submitting..." : "Enter with Number")))));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ChatForm);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SignUp);
 
 /***/ }),
 
-/***/ "./resources/js/Components/Message.js":
-/*!********************************************!*\
-  !*** ./resources/js/Components/Message.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-
-var Message = function Message(_ref) {
-  var text = _ref.text,
-      time = _ref.time,
-      username = _ref.username;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "flex items-start mb-4 py-2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-    src: "https://picsum.photos/id/237/200/300.jpg",
-    className: "w-10 h-10 rounded-full mr-3"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "flex-1 overflow-hidden"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "text-2xl font-semibold text-blue-200 mr-4"
-  }, username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "text-gray-300 text-xs"
-  }, time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "text-lg text-white leading-normal"
-  }, text)));
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Message);
-
-/***/ }),
-
-/***/ "./resources/js/Pages/Home.js":
+/***/ "./resources/js/Pages/Auth.js":
 /*!************************************!*\
-  !*** ./resources/js/Pages/Home.js ***!
+  !*** ./resources/js/Pages/Auth.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -292,15 +264,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Components_Chatform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/Chatform */ "./resources/js/Components/Chatform.js");
+/* harmony import */ var _Components_Signup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/Signup */ "./resources/js/Components/Signup.js");
 
 
 
-var Home = function Home() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Chatform__WEBPACK_IMPORTED_MODULE_1__.default, null);
+var Auth = function Auth() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Signup__WEBPACK_IMPORTED_MODULE_1__.default, null);
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Auth);
 
 /***/ }),
 
