@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Services\Twilio;
 use Inertia\Inertia;
 use App\Traits\FileHelpersTrait;
+use App\Events\MessageCreated;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,7 @@ use App\Traits\FileHelpersTrait;
 |
 */
 
+// Home page with chat box
 Route::get('/', function(Request $request, Twilio $convo){
     if (!$request->session()->has('user')){
         return redirect()->route('signin');
@@ -29,10 +32,20 @@ Route::get('/', function(Request $request, Twilio $convo){
     ]);
 })->name('home');
 
+// Auth page
 Route::get('auth', function(){
     return Inertia::render('Auth', []);
 })->name('signin');
 
+// Webhook endpoint
+Route::post('hook', function(Request $request){
+    if (intval($request['Index']) > $request->session()->get('count')){
+        Log::debug($request['Source']);
+        event(new MessageCreated($request['Source'], intval($request['Index'])));
+    }
+    
+    $request->session()->put('count', intval($request['Index']));
+});
 
 Route::group(['prefix' => 'convo'], function(){
     // Create conversation
@@ -75,7 +88,6 @@ Route::group(['prefix' => 'convo'], function(){
     Route::post('/{id}/create-message', function(
             Request $request, Twilio $convo, $id
         ){
-        $convo = new Twilio;
         $message = $convo->createMessage(
             $id, $request->session()->get('user'), $request->message
         );

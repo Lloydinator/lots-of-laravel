@@ -150,7 +150,7 @@ var ChatForm = function ChatForm(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__.default, {
       key: i,
       time: message[3],
-      username: message[1] == chat.username ? "Me" : message[1],
+      username: message[1] == chat.user ? "Me" : message[1],
       text: message[2]
     });
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
@@ -224,12 +224,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Components_Chatform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/Chatform */ "./resources/js/Components/Chatform.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _Components_Chatform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Components/Chatform */ "./resources/js/Components/Chatform.js");
+
 
 
 
 var Home = function Home(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Chatform__WEBPACK_IMPORTED_MODULE_1__.default, {
+  console.log(props);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    window.Echo.channel('message').listen('MessageCreated', function (e) {
+      console.log(e); //Inertia.reload({only: ['convo']})
+    });
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Chatform__WEBPACK_IMPORTED_MODULE_2__.default, {
     chat: props
   });
 };

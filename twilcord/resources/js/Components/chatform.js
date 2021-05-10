@@ -61,7 +61,7 @@ const ChatForm = ({chat}) => {
                     <Message
                         key={i} 
                         time={message[3]}
-                        username={message[1] == chat.username ? "Me" : message[1]} 
+                        username={message[1] == chat.user ? "Me" : message[1]} 
                         text={message[2]} 
                     />
                 ))}
