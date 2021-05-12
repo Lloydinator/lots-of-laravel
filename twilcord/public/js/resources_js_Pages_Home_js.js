@@ -234,7 +234,10 @@ var Home = function Home(props) {
   console.log(props);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     window.Echo.channel('message').listen('MessageCreated', function (e) {
-      console.log(e); //Inertia.reload({only: ['convo']})
+      console.log(e);
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__.Inertia.reload({
+        only: ['convo']
+      });
     });
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Components_Chatform__WEBPACK_IMPORTED_MODULE_2__.default, {

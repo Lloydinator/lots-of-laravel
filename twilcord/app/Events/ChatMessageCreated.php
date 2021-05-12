@@ -4,29 +4,23 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageCreated implements ShouldBroadcast
+class ChatMessageCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     protected $source;
-    protected $count;
-
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($source, $count)
+    public function __construct($source)
     {
         $this->source = $source;
-        $this->count = $count;
-        $this->dontBroadcastToCurrentUser();
     }
 
     /**

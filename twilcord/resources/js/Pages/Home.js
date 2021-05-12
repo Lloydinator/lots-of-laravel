@@ -7,7 +7,7 @@ const Home = props => {
     useEffect(() => {
         window.Echo.channel('message').listen('MessageCreated', e => {
             console.log(e)
-            //Inertia.reload({only: ['convo']})
+            Inertia.reload({only: ['convo']})
         })
     }, [])
     
