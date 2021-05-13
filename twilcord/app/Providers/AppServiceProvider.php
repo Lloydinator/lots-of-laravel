@@ -31,7 +31,8 @@ class AppServiceProvider extends ServiceProvider
         }   
         Inertia::share('flash', function(){
             return [
-                'message' => Session::get('message')
+                'message' => Session::get('message'), 
+                'notification' => Session::get('inertia_error')
             ];
         });
     }

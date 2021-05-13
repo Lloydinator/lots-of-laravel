@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Log;
 use App\Services\Twilio;
 use Inertia\Inertia;
 use App\Traits\FileHelpersTrait;
-use App\Events\SMSMessageCreated;
-use App\Events\ChatMessageCreated;
+use App\Events\MessageCreated;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +25,7 @@ Route::get('/', function(Request $request, Twilio $convo){
         return redirect()->route('signin');
     }
 
-    broadcast(new ChatMessageCreated('chat'))->toOthers();
+    broadcast(new MessageCreated('chat'))->toOthers();
     
     return Inertia::render('Home', [
         'convo' => $convo->listMessages($request->session()->get('sid')),
@@ -43,8 +42,8 @@ Route::get('auth', function(){
 // Webhook endpoint
 Route::post('hook', function(Request $request){
     if (intval($request['Index']) > $request->session()->get('count')){
-        //Log::debug([$request, $request->session()->get('user')]);
-        broadcast(new SMSMessageCreated('sms', intval($request['Index'])));
+        Log::debug([$request]);
+        broadcast(new MessageCreated('sms'));
     }
     
     $request->session()->put('count', intval($request['Index']));
@@ -91,7 +90,7 @@ Route::group(['prefix' => 'convo'], function(){
     Route::post('/{id}/create-message', function(
             Request $request, Twilio $convo, $id
         ){
-        $message = $convo->createMessage(
+        $message = $convo->cretateMessage(
             $id, $request->session()->get('user'), $request->message
         );
     

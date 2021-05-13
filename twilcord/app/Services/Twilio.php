@@ -81,7 +81,7 @@ class Twilio {
         $messages = $this->client->conversations->v1
                         ->conversations($sid)
                         ->messages
-                        ->read(20);
+                        ->read(30);
         $array = array();
         foreach($messages as $message){
             array_push($array, [

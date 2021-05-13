@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Inertia} from '@inertiajs/inertia'
 import Message from './Message'
+import Notification from './Notification'
 
 const ChatForm = ({chat}) => {
     const [thisText, setThisText] = useState('')
@@ -20,9 +21,6 @@ const ChatForm = ({chat}) => {
         {
             onStart: () => {
                 setSubmitting(true)
-            },
-            onSuccess: ({props}) => {
-                console.log(props)
             },
             onFinish: () => {
                 clearField()
@@ -52,6 +50,7 @@ const ChatForm = ({chat}) => {
     return (
         <div className="h-screen mx-auto lg:w-1/2 md:w-4/6 w-full mt-2">
             <h1 className="font-mono font-semibold text-black text-4xl text-center my-6">TWILCORD</h1>
+            <Notification notification={chat.flash.notification} />
             <div className="flex justify-between">
                 <p className="font-sans font-semibold text-lg text-black">{chatName}</p>
                 <p className="font-sans font-semibold text-lg text-black">{chat.user}</p>

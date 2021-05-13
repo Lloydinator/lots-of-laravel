@@ -1,9 +1,9 @@
 import React from 'react'
 import SignUp from '../Components/Signup'
 
-const Auth = () => {
+const Auth = props => {
     return (
-        <SignUp />
+        <SignUp flash={props} />
     )
 }
 

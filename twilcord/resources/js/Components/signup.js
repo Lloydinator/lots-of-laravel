@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {Inertia} from '@inertiajs/inertia'
+import Notification from './Notification'
 
-const SignUp = () => {
+const SignUp = ({flash}) => {
     const [username, setUsername] = useState('')
     const [userType, setUserType] = useState('username')
     const [convo, setConvo] = useState({sid: '', name: ''})
@@ -28,13 +29,10 @@ const SignUp = () => {
                             {
                                 onStart: () => {
                                     setSubmitting(true)
-                                },/*
-                                onSuccess: res => {
-                                    console.log(res)
                                 },
                                 onFinish: () => {
                                     setSubmitting(false)
-                                }*/
+                                }
                             }
                         )
                     }
@@ -46,13 +44,10 @@ const SignUp = () => {
                             {
                                 onStart: () => {
                                     setSubmitting(true)
-                                },/*
-                                onSuccess: res => {
-                                    console.log(res)
                                 },
                                 onFinish: () => {
                                     setSubmitting(false)
-                                }*/
+                                }
                             }
                         )
                     }
@@ -69,13 +64,10 @@ const SignUp = () => {
                     {
                         onStart: () => {
                             setSubmitting(true)
-                        },/*
-                        onSuccess: res => {
-                            console.log(res)
                         },
                         onFinish: () => {
                             setSubmitting(false)
-                        }*/
+                        }
                     }
                 )
             }
@@ -87,13 +79,10 @@ const SignUp = () => {
                     {
                         onStart: () => {
                             setSubmitting(true)
-                        },/*
-                        onSuccess: res => {
-                            console.log(res)
                         },
                         onFinish: () => {
                             setSubmitting(false)
-                        }*/
+                        }
                     }
                 )
             }
@@ -117,6 +106,7 @@ const SignUp = () => {
     return (
         <div className="flex justify-center">
             <div className="align-middle mt-20">
+                <Notification notification={flash.flash.notification} />
                 <form onSubmit={handleSubmit}>
                     {convo.name ? (
                         <div className="mt-2">
