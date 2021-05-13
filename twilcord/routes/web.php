@@ -90,7 +90,7 @@ Route::group(['prefix' => 'convo'], function(){
     Route::post('/{id}/create-message', function(
             Request $request, Twilio $convo, $id
         ){
-        $message = $convo->cretateMessage(
+        $message = $convo->createMessage(
             $id, $request->session()->get('user'), $request->message
         );
     
