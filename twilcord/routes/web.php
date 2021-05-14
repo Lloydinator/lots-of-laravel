@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 use App\Services\Twilio;
 use Inertia\Inertia;
 use App\Traits\FileHelpersTrait;
@@ -42,7 +42,6 @@ Route::get('auth', function(){
 // Webhook endpoint
 Route::post('hook', function(Request $request){
     if (intval($request['Index']) > $request->session()->get('count')){
-        Log::debug([$request]);
         broadcast(new MessageCreated('sms'));
     }
     
