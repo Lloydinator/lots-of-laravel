@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import SignUp from '../Components/signup'
-import ChatForm from '../Components/chatform'
+import SignUp from '../Components/Signup'
+import ChatForm from '../Components/Chatform'
 
 const Home = () => {
     const [chat, setChat] = useState({

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Inertia} from '@inertiajs/inertia'
-import Bubble from './bubble'
+import Message from './Message'
 
 const ChatForm = ({chat}) => {
     const [thisText, setThisText] = useState('')
@@ -63,16 +63,6 @@ const ChatForm = ({chat}) => {
         }
     }
 
-    /*
-    function getMessages(){
-        Inertia.get(`/`, {id: chat.sid}, {
-            onSuccess: res => {
-                console.log(res)
-            }
-        })
-    }
-    */
-
     // Fetch messages every three seconds and clean up once component unmounts
     useEffect(() => {
         const interval = setInterval(() => {
@@ -92,7 +82,7 @@ const ChatForm = ({chat}) => {
             </div>
             <div className="h-3/4 overflow-y-scroll px-6 py-4 mb-2 bg-gray-800 rounded-md">
                 {messages.map((message, i) => (
-                    <Bubble 
+                    <Message 
                         key={i} 
                         time={message[3]}
                         username={message[1] == chat.username ? "Me" : message[1]} 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Bubble = ({text, time, username}) => (
+const Message = ({text, time, username}) => (
     <div className="flex items-start mb-4 py-2">
         <img 
             src="https://picsum.photos/id/237/200/300.jpg" 
@@ -16,4 +16,4 @@ const Bubble = ({text, time, username}) => (
     </div>
 )
 
-export default Bubble
+export default Message
