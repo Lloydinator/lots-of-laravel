@@ -47,30 +47,6 @@ const ChatForm = ({chat}) => {
         jsonFile()
     }, [])
 
-<<<<<<< HEAD
-    // Fetch messages
-    async function getMessages(){
-        const response = await fetch(`/convo/${chat.sid}/messages`)
-        const json = await response.json()
-
-        if (json.messages.length > arrLength){
-            setMessages(json.messages)
-            setArrLength(json.messages.length)
-        }
-    }
-
-    // Fetch messages every three seconds and clean up once component unmounts
-    useEffect(() => {
-        const interval = setInterval(() => {
-            getMessages()
-        }, 3000)
-
-        return () => clearInterval(interval)
-    }, [])
-
-    
-=======
->>>>>>> part2
     return (
         <div className="h-screen mx-auto lg:w-1/2 md:w-4/6 w-full mt-2">
             <h1 className="font-mono font-semibold text-black text-4xl text-center my-6">TWILCORD</h1>
@@ -80,13 +56,8 @@ const ChatForm = ({chat}) => {
                 <p className="font-sans font-semibold text-lg text-black">{chat.user}</p>
             </div>
             <div className="h-3/4 overflow-y-scroll px-6 py-4 mb-2 bg-gray-800 rounded-md">
-<<<<<<< HEAD
-                {messages.map((message, i) => (
-                    <Message 
-=======
                 {chat.convo.map((message, i) => (
                     <Message
->>>>>>> part2
                         key={i} 
                         time={message[3]}
                         username={message[1] == chat.user ? "Me" : message[1]} 
