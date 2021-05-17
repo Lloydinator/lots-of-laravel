@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {Inertia} from '@inertiajs/inertia'
+import Notification from './Notification'
 
-const SignUp = props => {
+const SignUp = ({flash}) => {
     const [username, setUsername] = useState('')
     const [userType, setUserType] = useState('username')
     const [convo, setConvo] = useState({sid: '', name: ''})
@@ -10,16 +11,6 @@ const SignUp = props => {
 
     function handleChange(e){
         setUsername(e.target.value)
-    }
-    
-    function changeChat(csid){
-        chatExists === false ? 
-            props.onChange({
-                chatStatus: true, sid: csid, username: username
-            }) : 
-            props.onChange({
-                chatStatus: true, sid: convo.sid, username: username
-            })
     }
 
     function handleSubmit(e){
@@ -39,12 +30,8 @@ const SignUp = props => {
                                 onStart: () => {
                                     setSubmitting(true)
                                 },
-                                onSuccess: res => {
-                                    console.log(res)
-                                },
                                 onFinish: () => {
                                     setSubmitting(false)
-                                    changeChat(props.flash.message)
                                 }
                             }
                         )
@@ -58,12 +45,8 @@ const SignUp = props => {
                                 onStart: () => {
                                     setSubmitting(true)
                                 },
-                                onSuccess: res => {
-                                    console.log(res)
-                                },
                                 onFinish: () => {
                                     setSubmitting(false)
-                                    changeChat(props.flash.message)
                                 }
                             }
                         )
@@ -82,12 +65,8 @@ const SignUp = props => {
                         onStart: () => {
                             setSubmitting(true)
                         },
-                        onSuccess: res => {
-                            console.log(res)
-                        },
                         onFinish: () => {
                             setSubmitting(false)
-                            changeChat(convo.sid)
                         }
                     }
                 )
@@ -101,12 +80,8 @@ const SignUp = props => {
                         onStart: () => {
                             setSubmitting(true)
                         },
-                        onSuccess: res => {
-                            console.log(res)
-                        },
                         onFinish: () => {
                             setSubmitting(false)
-                            changeChat(convo.sid)
                         }
                     }
                 )
@@ -131,6 +106,7 @@ const SignUp = props => {
     return (
         <div className="flex justify-center">
             <div className="align-middle mt-20">
+                <Notification notification={flash.flash.notification} />
                 <form onSubmit={handleSubmit}>
                     {convo.name ? (
                         <div className="mt-2">

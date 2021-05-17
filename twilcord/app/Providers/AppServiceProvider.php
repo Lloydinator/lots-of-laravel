@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,9 +26,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (app()->environment('production', 'local')){
+            URL::forceScheme('https');
+        }   
         Inertia::share('flash', function(){
             return [
-                'message' => Session::get('message')
+                'message' => Session::get('message'), 
+                'notification' => Session::get('inertia_error')
             ];
         });
     }

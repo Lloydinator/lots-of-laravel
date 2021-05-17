@@ -1,24 +1,16 @@
-import React, {useState} from 'react'
-import SignUp from '../Components/Signup'
+import React, { useEffect } from 'react'
+import {Inertia} from '@inertiajs/inertia'
 import ChatForm from '../Components/Chatform'
 
-const Home = () => {
-    const [chat, setChat] = useState({
-        chatStatus: false, sid: '', username: ''
-    })
+const Home = props => {
+    useEffect(() => {
+        window.Echo.channel('message').listen('MessageCreated', e => {
+            Inertia.reload({only: ['convo']})
+        })
+    }, [])
     
-    function handleChange(value){
-        setChat(value)
-    }
-
     return (
-        <>
-            {chat.chatStatus ? (
-                <ChatForm chat={chat} />
-            ) : (
-                <SignUp onChange={handleChange} />
-            )}
-        </>
+        <ChatForm chat={props} />
     )
 }
 

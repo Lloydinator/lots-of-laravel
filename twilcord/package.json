@@ -27,6 +27,8 @@
     "dependencies": {
         "@inertiajs/inertia-react": "^0.5.4",
         "@types/react": "^17.0.3",
+        "laravel-echo": "^1.10.0",
+        "pusher-js": "^4.4.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1"
     }
