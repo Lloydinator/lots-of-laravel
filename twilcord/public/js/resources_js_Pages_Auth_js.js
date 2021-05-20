@@ -11,8 +11,6 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
 /***/ "./resources/js/Components/Notification.js":
 /*!*************************************************!*\
   !*** ./resources/js/Components/Notification.js ***!
@@ -69,7 +67,6 @@ var Notification = function Notification(props) {
 
 /***/ }),
 
->>>>>>> part2
 /***/ "./resources/js/Components/Signup.js":
 /*!*******************************************!*\
   !*** ./resources/js/Components/Signup.js ***!
@@ -85,10 +82,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-<<<<<<< HEAD
-=======
 /* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Notification */ "./resources/js/Components/Notification.js");
->>>>>>> part2
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -110,14 +104,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-<<<<<<< HEAD
-var SignUp = function SignUp(props) {
-=======
 
 var SignUp = function SignUp(_ref) {
   var flash = _ref.flash;
 
->>>>>>> part2
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -150,33 +140,13 @@ var SignUp = function SignUp(_ref) {
     setUsername(e.target.value);
   }
 
-<<<<<<< HEAD
-  function changeChat(csid) {
-    chatExists === false ? props.onChange({
-      chatStatus: true,
-      sid: csid,
-      username: username
-    }) : props.onChange({
-      chatStatus: true,
-      sid: convo.sid,
-      username: username
-    });
-  }
-
-=======
->>>>>>> part2
   function handleSubmit(e) {
     e.preventDefault(); // If user doesn't check the box to join existing room
 
     if (chatExists === false) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post('/convo/create', {}, {
-<<<<<<< HEAD
-        onSuccess: function onSuccess(_ref) {
-          var props = _ref.props;
-=======
         onSuccess: function onSuccess(_ref2) {
           var props = _ref2.props;
->>>>>>> part2
 
           // If user joins by username
           if (userType === 'username') {
@@ -186,17 +156,8 @@ var SignUp = function SignUp(_ref) {
               onStart: function onStart() {
                 setSubmitting(true);
               },
-<<<<<<< HEAD
-              onSuccess: function onSuccess(res) {
-                console.log(res);
-              },
               onFinish: function onFinish() {
                 setSubmitting(false);
-                changeChat(props.flash.message);
-=======
-              onFinish: function onFinish() {
-                setSubmitting(false);
->>>>>>> part2
               }
             });
           } // If user joins by number
@@ -207,17 +168,8 @@ var SignUp = function SignUp(_ref) {
                 onStart: function onStart() {
                   setSubmitting(true);
                 },
-<<<<<<< HEAD
-                onSuccess: function onSuccess(res) {
-                  console.log(res);
-                },
                 onFinish: function onFinish() {
                   setSubmitting(false);
-                  changeChat(props.flash.message);
-=======
-                onFinish: function onFinish() {
-                  setSubmitting(false);
->>>>>>> part2
                 }
               });
             }
@@ -233,17 +185,8 @@ var SignUp = function SignUp(_ref) {
             onStart: function onStart() {
               setSubmitting(true);
             },
-<<<<<<< HEAD
-            onSuccess: function onSuccess(res) {
-              console.log(res);
-            },
             onFinish: function onFinish() {
               setSubmitting(false);
-              changeChat(convo.sid);
-=======
-            onFinish: function onFinish() {
-              setSubmitting(false);
->>>>>>> part2
             }
           });
         } // If user joins by number
@@ -254,17 +197,8 @@ var SignUp = function SignUp(_ref) {
               onStart: function onStart() {
                 setSubmitting(true);
               },
-<<<<<<< HEAD
-              onSuccess: function onSuccess(res) {
-                console.log(res);
-              },
               onFinish: function onFinish() {
                 setSubmitting(false);
-                changeChat(convo.sid);
-=======
-              onFinish: function onFinish() {
-                setSubmitting(false);
->>>>>>> part2
               }
             });
           }
@@ -318,13 +252,9 @@ var SignUp = function SignUp(_ref) {
     className: "flex justify-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "align-middle mt-20"
-<<<<<<< HEAD
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-=======
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Notification__WEBPACK_IMPORTED_MODULE_3__.default, {
     notification: flash.flash.notification
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
->>>>>>> part2
     onSubmit: handleSubmit
   }, convo.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "mt-2"

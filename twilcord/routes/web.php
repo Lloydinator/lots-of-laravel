@@ -26,7 +26,7 @@ Route::get('/', function(Request $request, Twilio $convo){
     }
 
     broadcast(new MessageCreated('chat'))->toOthers();
-    
+     
     return Inertia::render('Home', [
         'convo' => $convo->listMessages($request->session()->get('sid')),
         'sid' => $request->session()->get('sid'),
