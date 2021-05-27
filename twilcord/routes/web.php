@@ -41,11 +41,14 @@ Route::get('auth', function(){
 
 // Webhook endpoint
 Route::post('hook', function(Request $request){
+    Log::debug($request);
+    /*
     if (intval($request['Index']) > $request->session()->get('count')){
         broadcast(new MessageCreated('sms'));
     }
     
     $request->session()->put('count', intval($request['Index']));
+    */
 });
 
 Route::group(['prefix' => 'convo'], function(){
