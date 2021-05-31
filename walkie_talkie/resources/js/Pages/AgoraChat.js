@@ -1,12 +1,14 @@
-import Authenticated from '@/Layouts/Authenticated';
-import React from 'react';
+import React, {useEffect} from 'react'
+import Authenticated from '@/Layouts/Authenticated'
+//import AgoraRTC from 'agora-rtc-sdk'
+//import { Inertia } from '@inertiajs/inertia'
 
-export default function Dashboard(props) {
+const AgoraChat = props => {
     return (
         <Authenticated
             auth={props.auth}
             errors={props.errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Chat</h2>}
         >
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -18,3 +20,5 @@ export default function Dashboard(props) {
         </Authenticated>
     );
 }
+
+export default AgoraChat
