@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\User;
 use App\Http\Requests\TransactionRequest;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,25 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request)
     {
         $validated = $request->validated();
-        dd($validated);
+
+        $user_from = User::find(auth()->user()->id);
+        $user_to = User::firstWhere('email', $validated['email']);
+
+        Transaction::create([
+            'user_from' => auth()->user()->id,
+            'user_to' => $user_to->id,
+            'amount' => $validated['amount']
+        ]);
+
+        // Update balances
+        $user_from->account->balance = $user_from->account->balance - $validated['amount'];
+        $user_to->account->balance = $user_to->account->balance + $validated['amount'];
+
+        if ($user_from->push() && $user_to->push()){
+            return redirect()->back()->with([
+                'message' => 'Success!'
+            ]);
+        }
     }
 
     /**

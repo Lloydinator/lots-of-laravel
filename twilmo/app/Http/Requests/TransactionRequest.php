@@ -34,7 +34,8 @@ class TransactionRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.not_in' => 'You can\'t send money to yourself'
+            'email.exists' => 'This user doesn\'t exist.',
+            'email.not_in' => 'You can\'t send money to yourself.'
         ];
     }
 }

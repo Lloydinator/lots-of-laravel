@@ -1,8 +1,29 @@
-import React from "react"
-import Navbar from "../Components/Navbar"
-import Footer from "../Components/Footer"
+import React, { useReducer, useState } from 'react'
+import { Inertia } from '@inertiajs/inertia'
+import Navbar from '../Components/Navbar'
+import Footer from '../Components/Footer'
+
+const formReducer = (state, event) => {
+  return {
+    ...state,
+    [event.target.name]: event.target.value
+  }
+}
 
 const Profile = ({ account, user, errors }) => {
+  console.log(account)
+  const [data, setData] = useReducer(formReducer, {})
+
+  function handleSubmit(e){
+    e.preventDefault()
+
+    console.log(data)
+    Inertia.post(route('send-money'), data, {
+      onSuccess: ({props}) => {
+        console.log(props)
+      }
+    })
+  }
   return (
     <>
       <Navbar transparent />
@@ -67,7 +88,7 @@ const Profile = ({ account, user, errors }) => {
                 </div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                     <div className="flex justify-center">
-                        <form className="w-full max-w-sm" method="POST" action={ route('send-money') }>
+                        <form className="w-full max-w-sm" onSubmit={handleSubmit}>
                             <div className="mb-6">
                                 <div className="md:flex md:items-center">
                                   <div className="md:w-1/3">
@@ -76,13 +97,18 @@ const Profile = ({ account, user, errors }) => {
                                   </label>
                                   </div>
                                   <div className="md:w-2/3">
-                                      <input className={`${Object.keys(errors).length > 0 ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
-                                        type="text" name="email" placeholder="person@example.net" />
+                                      <input 
+                                        className={`${Object.keys(errors).length > 0 && errors.email ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                        type="text" 
+                                        name="email" 
+                                        placeholder="person@example.net" 
+                                        onChange={setData}
+                                      />
                                   </div>
                                 </div>
                                 {Object.keys(errors).length > 0 ?
-                                  (<span class="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                    This is an error
+                                  (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                    { errors.email }
                                   </span>) : null
                                 }
                             </div>
@@ -94,20 +120,29 @@ const Profile = ({ account, user, errors }) => {
                                   </label>
                                   </div>
                                   <div className="md:w-2/3 flex">
-                                      <span className="leading-10 mr-2">$</span><input className={`${Object.keys(errors).length > 0 ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
-                                        type="text" name="amount" placeholder="3.00" />
+                                      <span className="leading-10 mr-2">$</span>
+                                      <input 
+                                        className={`${Object.keys(errors).length > 0 && errors.amount ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                        type="text" 
+                                        name="amount" 
+                                        placeholder="3.00"
+                                        onChange={setData}
+                                      />
                                   </div>
                                 </div>
                                 {Object.keys(errors).length > 0 ?
-                                  (<span class="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                    This is an error
+                                  (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                    { errors.amount }
                                   </span>) : null
                                 }
                             </div>
                             <div className="md:flex md:items-center">
                                 <div className="md:w-1/3"></div>
                                 <div className="md:w-2/3">
-                                <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                                <button 
+                                  className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
+                                  type="submit"
+                                >
                                     Send
                                 </button>
                                 </div>
