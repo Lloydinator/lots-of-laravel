@@ -4946,15 +4946,16 @@ var Profile = function Profile(_ref) {
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                           className: "md:w-2/3",
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                            className: "".concat(Object.keys(errors).length !== 0 ? 'border-red-500' : 'border-gray-200', " bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"),
+                            className: "".concat(Object.keys(errors).length > 0 ? 'border-red-500' : 'border-gray-200', " bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"),
                             type: "text",
+                            name: "email",
                             placeholder: "person@example.net"
                           })
                         })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                      }), Object.keys(errors).length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
                         "class": "font-medium tracking-wide text-red-500 text-xs mt-1 ml-1",
                         children: "This is an error"
-                      })]
+                      }) : null]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                       className: "mb-6",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -4972,15 +4973,16 @@ var Profile = function Profile(_ref) {
                             className: "leading-10 mr-2",
                             children: "$"
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                            className: "".concat(Object.keys(errors).length !== 0 ? 'border-red-500' : 'border-gray-200', " bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"),
+                            className: "".concat(Object.keys(errors).length > 0 ? 'border-red-500' : 'border-gray-200', " bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"),
                             type: "text",
+                            name: "amount",
                             placeholder: "3.00"
                           })]
                         })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                      }), Object.keys(errors).length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
                         "class": "font-medium tracking-wide text-red-500 text-xs mt-1 ml-1",
                         children: "This is an error"
-                      })]
+                      }) : null]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                       className: "md:flex md:items-center",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {

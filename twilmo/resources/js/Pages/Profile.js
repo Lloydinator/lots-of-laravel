@@ -76,12 +76,15 @@ const Profile = ({ account, user, errors }) => {
                                   </label>
                                   </div>
                                   <div className="md:w-2/3">
-                                      <input className={`${Object.keys(errors).length !== 0 ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} type="text" placeholder="person@example.net" />
+                                      <input className={`${Object.keys(errors).length > 0 ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                        type="text" name="email" placeholder="person@example.net" />
                                   </div>
                                 </div>
-                                <span class="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                  This is an error
-                                </span>
+                                {Object.keys(errors).length > 0 ?
+                                  (<span class="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                    This is an error
+                                  </span>) : null
+                                }
                             </div>
                             <div className="mb-6">
                                 <div className="md:flex md:items-center">
@@ -91,12 +94,15 @@ const Profile = ({ account, user, errors }) => {
                                   </label>
                                   </div>
                                   <div className="md:w-2/3 flex">
-                                      <span className="leading-10 mr-2">$</span><input className={`${Object.keys(errors).length !== 0 ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} type="text" placeholder="3.00" />
+                                      <span className="leading-10 mr-2">$</span><input className={`${Object.keys(errors).length > 0 ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                        type="text" name="amount" placeholder="3.00" />
                                   </div>
                                 </div>
-                                <span class="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                  This is an error
-                                </span>
+                                {Object.keys(errors).length > 0 ?
+                                  (<span class="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                    This is an error
+                                  </span>) : null
+                                }
                             </div>
                             <div className="md:flex md:items-center">
                                 <div className="md:w-1/3"></div>

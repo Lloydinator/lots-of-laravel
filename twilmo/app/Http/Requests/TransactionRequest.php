@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckBalance;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TransactionRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class TransactionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,15 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => ['required','email','exists:App\Models\User,email',Rule::notIn([auth()->user()->email])],
+            'amount' => ['required','numeric',new CheckBalance()]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.not_in' => 'You can\'t send money to yourself'
         ];
     }
 }

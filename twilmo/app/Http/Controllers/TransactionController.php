@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Http\Requests\TransactionRequest;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -18,24 +19,15 @@ class TransactionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request)
     {
-        //
+        $validated = $request->validated();
+        dd($validated);
     }
 
     /**
