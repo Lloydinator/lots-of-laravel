@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AccountController extends Controller
 {
@@ -14,7 +16,10 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Profile', [
+            'user' => User::find(auth()->user()->id),
+            'account' => User::find(auth()->user()->id)->account
+        ]);
     }
 
     /**

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'balance'];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
 }
