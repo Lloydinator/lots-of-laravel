@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\User;
+use App\Traits\StripeHelperTrait;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AccountController extends Controller
 {
+    use StripeHelperTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +19,14 @@ class AccountController extends Controller
      */
     public function index()
     {
+        $account = User::find(auth()->user()->id)->account;
+
+        $secret = $this->createSetupIntent($account->customer_id);
+
         return Inertia::render('Profile', [
             'user' => User::find(auth()->user()->id),
-            'account' => User::find(auth()->user()->id)->account
+            'account' => $account,
+            'client_secret' => $secret
         ]);
     }
 

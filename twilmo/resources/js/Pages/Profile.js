@@ -1,5 +1,8 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer } from 'react'
 import { Inertia } from '@inertiajs/inertia'
+import {Elements} from '@stripe/react-stripe-js'
+import {loadStripe} from '@stripe/stripe-js'
+import {PaymentElement} from '@stripe/react-stripe-js';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 
@@ -10,9 +13,14 @@ const formReducer = (state, event) => {
   }
 }
 
-const Profile = ({ account, user, errors }) => {
-  console.log(account)
+const stripePromise = ({ app }) => loadStripe(app.stripe_publishable_key)
+
+const Profile = ({ account, user, errors, client_secret }) => {
   const [data, setData] = useReducer(formReducer, {})
+
+  const options = {
+    clientSecret: client_secret
+  }
 
   function handleSubmit(e){
     e.preventDefault()
@@ -24,6 +32,7 @@ const Profile = ({ account, user, errors }) => {
       }
     })
   }
+
   return (
     <>
       <Navbar transparent />
@@ -85,6 +94,14 @@ const Profile = ({ account, user, errors }) => {
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
                         <strong>Balance:</strong> ${ account.balance } 
                   </div>
+                </div>
+                <div className="mt-10 py-10 border-t border-gray-300">
+                  <Elements stripe={stripePromise} options={options}>
+                    <form>
+                      <PaymentElement />
+                      <button>Submit</button>
+                    </form>
+                  </Elements>
                 </div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                     <div className="flex justify-center">

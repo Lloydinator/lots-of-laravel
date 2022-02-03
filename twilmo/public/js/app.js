@@ -1201,6 +1201,878 @@ var n,e=(n=__webpack_require__(/*! nprogress */ "./node_modules/nprogress/nprogr
 
 /***/ }),
 
+/***/ "./node_modules/@stripe/react-stripe-js/dist/react-stripe.umd.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@stripe/react-stripe-js/dist/react-stripe.umd.js ***!
+  \***********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+(function (global, factory) {
+	 true ? factory(exports, __webpack_require__(/*! react */ "./node_modules/react/index.js")) :
+	0;
+}(this, (function (exports, React) { 'use strict';
+
+	React = React && Object.prototype.hasOwnProperty.call(React, 'default') ? React['default'] : React;
+
+	function createCommonjsModule(fn, module) {
+		return module = { exports: {} }, fn(module, module.exports), module.exports;
+	}
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 */
+
+	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+	var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+
+	function emptyFunction() {}
+
+	function emptyFunctionWithReset() {}
+
+	emptyFunctionWithReset.resetWarningCache = emptyFunction;
+
+	var factoryWithThrowingShims = function () {
+	  function shim(props, propName, componentName, location, propFullName, secret) {
+	    if (secret === ReactPropTypesSecret_1) {
+	      // It is still safe when called from React.
+	      return;
+	    }
+
+	    var err = new Error('Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
+	    err.name = 'Invariant Violation';
+	    throw err;
+	  }
+	  shim.isRequired = shim;
+
+	  function getShim() {
+	    return shim;
+	  }
+	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+
+	  var ReactPropTypes = {
+	    array: shim,
+	    bool: shim,
+	    func: shim,
+	    number: shim,
+	    object: shim,
+	    string: shim,
+	    symbol: shim,
+	    any: shim,
+	    arrayOf: getShim,
+	    element: shim,
+	    elementType: shim,
+	    instanceOf: getShim,
+	    node: shim,
+	    objectOf: getShim,
+	    oneOf: getShim,
+	    oneOfType: getShim,
+	    shape: getShim,
+	    exact: getShim,
+	    checkPropTypes: emptyFunctionWithReset,
+	    resetWarningCache: emptyFunction
+	  };
+	  ReactPropTypes.PropTypes = ReactPropTypes;
+	  return ReactPropTypes;
+	};
+
+	var propTypes = createCommonjsModule(function (module) {
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 */
+	{
+	  // By explicitly using `prop-types` you are opting into new production behavior.
+	  // http://fb.me/prop-types-in-prod
+	  module.exports = factoryWithThrowingShims();
+	}
+	});
+
+	function _typeof(obj) {
+	  "@babel/helpers - typeof";
+
+	  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+	    _typeof = function (obj) {
+	      return typeof obj;
+	    };
+	  } else {
+	    _typeof = function (obj) {
+	      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+	    };
+	  }
+
+	  return _typeof(obj);
+	}
+
+	function _defineProperty(obj, key, value) {
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	}
+
+	function ownKeys(object, enumerableOnly) {
+	  var keys = Object.keys(object);
+
+	  if (Object.getOwnPropertySymbols) {
+	    var symbols = Object.getOwnPropertySymbols(object);
+	    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+	      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+	    });
+	    keys.push.apply(keys, symbols);
+	  }
+
+	  return keys;
+	}
+
+	function _objectSpread2(target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i] != null ? arguments[i] : {};
+
+	    if (i % 2) {
+	      ownKeys(Object(source), true).forEach(function (key) {
+	        _defineProperty(target, key, source[key]);
+	      });
+	    } else if (Object.getOwnPropertyDescriptors) {
+	      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+	    } else {
+	      ownKeys(Object(source)).forEach(function (key) {
+	        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+	      });
+	    }
+	  }
+
+	  return target;
+	}
+
+	function _slicedToArray(arr, i) {
+	  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+	}
+
+	function _arrayWithHoles(arr) {
+	  if (Array.isArray(arr)) return arr;
+	}
+
+	function _iterableToArrayLimit(arr, i) {
+	  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+	  var _arr = [];
+	  var _n = true;
+	  var _d = false;
+	  var _e = undefined;
+
+	  try {
+	    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+	      _arr.push(_s.value);
+
+	      if (i && _arr.length === i) break;
+	    }
+	  } catch (err) {
+	    _d = true;
+	    _e = err;
+	  } finally {
+	    try {
+	      if (!_n && _i["return"] != null) _i["return"]();
+	    } finally {
+	      if (_d) throw _e;
+	    }
+	  }
+
+	  return _arr;
+	}
+
+	function _unsupportedIterableToArray(o, minLen) {
+	  if (!o) return;
+	  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+	  var n = Object.prototype.toString.call(o).slice(8, -1);
+	  if (n === "Object" && o.constructor) n = o.constructor.name;
+	  if (n === "Map" || n === "Set") return Array.from(o);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+	}
+
+	function _arrayLikeToArray(arr, len) {
+	  if (len == null || len > arr.length) len = arr.length;
+
+	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+	  return arr2;
+	}
+
+	function _nonIterableRest() {
+	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+
+	var usePrevious = function usePrevious(value) {
+	  var ref = React.useRef(value);
+	  React.useEffect(function () {
+	    ref.current = value;
+	  }, [value]);
+	  return ref.current;
+	};
+
+	var isUnknownObject = function isUnknownObject(raw) {
+	  return raw !== null && _typeof(raw) === 'object';
+	};
+	var isPromise = function isPromise(raw) {
+	  return isUnknownObject(raw) && typeof raw.then === 'function';
+	}; // We are using types to enforce the `stripe` prop in this lib,
+	// but in an untyped integration `stripe` could be anything, so we need
+	// to do some sanity validation to prevent type errors.
+
+	var isStripe = function isStripe(raw) {
+	  return isUnknownObject(raw) && typeof raw.elements === 'function' && typeof raw.createToken === 'function' && typeof raw.createPaymentMethod === 'function' && typeof raw.confirmCardPayment === 'function';
+	};
+
+	var PLAIN_OBJECT_STR = '[object Object]';
+	var isEqual = function isEqual(left, right) {
+	  if (!isUnknownObject(left) || !isUnknownObject(right)) {
+	    return left === right;
+	  }
+
+	  var leftArray = Array.isArray(left);
+	  var rightArray = Array.isArray(right);
+	  if (leftArray !== rightArray) return false;
+	  var leftPlainObject = Object.prototype.toString.call(left) === PLAIN_OBJECT_STR;
+	  var rightPlainObject = Object.prototype.toString.call(right) === PLAIN_OBJECT_STR;
+	  if (leftPlainObject !== rightPlainObject) return false; // not sure what sort of special object this is (regexp is one option), so
+	  // fallback to reference check.
+
+	  if (!leftPlainObject && !leftArray) return left === right;
+	  var leftKeys = Object.keys(left);
+	  var rightKeys = Object.keys(right);
+	  if (leftKeys.length !== rightKeys.length) return false;
+	  var keySet = {};
+
+	  for (var i = 0; i < leftKeys.length; i += 1) {
+	    keySet[leftKeys[i]] = true;
+	  }
+
+	  for (var _i = 0; _i < rightKeys.length; _i += 1) {
+	    keySet[rightKeys[_i]] = true;
+	  }
+
+	  var allKeys = Object.keys(keySet);
+
+	  if (allKeys.length !== leftKeys.length) {
+	    return false;
+	  }
+
+	  var l = left;
+	  var r = right;
+
+	  var pred = function pred(key) {
+	    return isEqual(l[key], r[key]);
+	  };
+
+	  return allKeys.every(pred);
+	};
+
+	var extractAllowedOptionsUpdates = function extractAllowedOptionsUpdates(options, prevOptions, immutableKeys) {
+	  if (!isUnknownObject(options)) {
+	    return null;
+	  }
+
+	  return Object.keys(options).reduce(function (newOptions, key) {
+	    var isUpdated = !isUnknownObject(prevOptions) || !isEqual(options[key], prevOptions[key]);
+
+	    if (immutableKeys.includes(key)) {
+	      if (isUpdated) {
+	        console.warn("Unsupported prop change: options.".concat(key, " is not a mutable property."));
+	      }
+
+	      return newOptions;
+	    }
+
+	    if (!isUpdated) {
+	      return newOptions;
+	    }
+
+	    return _objectSpread2(_objectSpread2({}, newOptions || {}), {}, _defineProperty({}, key, options[key]));
+	  }, null);
+	};
+
+	var INVALID_STRIPE_ERROR = 'Invalid prop `stripe` supplied to `Elements`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.'; // We are using types to enforce the `stripe` prop in this lib, but in a real
+	// integration `stripe` could be anything, so we need to do some sanity
+	// validation to prevent type errors.
+
+	var validateStripe = function validateStripe(maybeStripe) {
+	  if (maybeStripe === null || isStripe(maybeStripe)) {
+	    return maybeStripe;
+	  }
+
+	  throw new Error(INVALID_STRIPE_ERROR);
+	};
+
+	var parseStripeProp = function parseStripeProp(raw) {
+	  if (isPromise(raw)) {
+	    return {
+	      tag: 'async',
+	      stripePromise: Promise.resolve(raw).then(validateStripe)
+	    };
+	  }
+
+	  var stripe = validateStripe(raw);
+
+	  if (stripe === null) {
+	    return {
+	      tag: 'empty'
+	    };
+	  }
+
+	  return {
+	    tag: 'sync',
+	    stripe: stripe
+	  };
+	};
+
+	var ElementsContext = /*#__PURE__*/React.createContext(null);
+	ElementsContext.displayName = 'ElementsContext';
+	var parseElementsContext = function parseElementsContext(ctx, useCase) {
+	  if (!ctx) {
+	    throw new Error("Could not find Elements context; You need to wrap the part of your app that ".concat(useCase, " in an <Elements> provider."));
+	  }
+
+	  return ctx;
+	};
+	/**
+	 * The `Elements` provider allows you to use [Element components](https://stripe.com/docs/stripe-js/react#element-components) and access the [Stripe object](https://stripe.com/docs/js/initializing) in any nested component.
+	 * Render an `Elements` provider at the root of your React app so that it is available everywhere you need it.
+	 *
+	 * To use the `Elements` provider, call `loadStripe` from `@stripe/stripe-js` with your publishable key.
+	 * The `loadStripe` function will asynchronously load the Stripe.js script and initialize a `Stripe` object.
+	 * Pass the returned `Promise` to `Elements`.
+	 *
+	 * @docs https://stripe.com/docs/stripe-js/react#elements-provider
+	 */
+
+	var Elements = function Elements(_ref) {
+	  var rawStripeProp = _ref.stripe,
+	      options = _ref.options,
+	      children = _ref.children;
+
+	  var _final = React.useRef(false);
+
+	  var isMounted = React.useRef(true);
+	  var parsed = React.useMemo(function () {
+	    return parseStripeProp(rawStripeProp);
+	  }, [rawStripeProp]);
+
+	  var _React$useState = React.useState(function () {
+	    return {
+	      stripe: null,
+	      elements: null
+	    };
+	  }),
+	      _React$useState2 = _slicedToArray(_React$useState, 2),
+	      ctx = _React$useState2[0],
+	      setContext = _React$useState2[1];
+
+	  var prevStripe = usePrevious(rawStripeProp);
+
+	  if (prevStripe !== null) {
+	    if (prevStripe !== rawStripeProp) {
+	      console.warn('Unsupported prop change on Elements: You cannot change the `stripe` prop after setting it.');
+	    }
+	  }
+
+	  if (!_final.current) {
+	    if (parsed.tag === 'sync') {
+	      _final.current = true;
+	      setContext({
+	        stripe: parsed.stripe,
+	        elements: parsed.stripe.elements(options)
+	      });
+	    }
+
+	    if (parsed.tag === 'async') {
+	      _final.current = true;
+	      parsed.stripePromise.then(function (stripe) {
+	        if (stripe && isMounted.current) {
+	          // Only update Elements context if the component is still mounted
+	          // and stripe is not null. We allow stripe to be null to make
+	          // handling SSR easier.
+	          setContext({
+	            stripe: stripe,
+	            elements: stripe.elements(options)
+	          });
+	        }
+	      });
+	    }
+	  }
+
+	  var prevOptions = usePrevious(options);
+	  React.useEffect(function () {
+	    if (!ctx.elements) {
+	      return;
+	    }
+
+	    var updates = extractAllowedOptionsUpdates(options, prevOptions, ['clientSecret', 'fonts']);
+
+	    if (updates) {
+	      ctx.elements.update(updates);
+	    }
+	  }, [options, prevOptions, ctx.elements]);
+	  React.useEffect(function () {
+	    return function () {
+	      isMounted.current = false;
+	    };
+	  }, []);
+	  React.useEffect(function () {
+	    var anyStripe = ctx.stripe;
+
+	    if (!anyStripe || !anyStripe._registerWrapper || !anyStripe.registerAppInfo) {
+	      return;
+	    }
+
+	    anyStripe._registerWrapper({
+	      name: 'react-stripe-js',
+	      version: "1.7.0"
+	    });
+
+	    anyStripe.registerAppInfo({
+	      name: 'react-stripe-js',
+	      version: "1.7.0",
+	      url: 'https://stripe.com/docs/stripe-js/react'
+	    });
+	  }, [ctx.stripe]);
+	  return /*#__PURE__*/React.createElement(ElementsContext.Provider, {
+	    value: ctx
+	  }, children);
+	};
+	Elements.propTypes = {
+	  stripe: propTypes.any,
+	  options: propTypes.object
+	};
+	var useElementsContextWithUseCase = function useElementsContextWithUseCase(useCaseMessage) {
+	  var ctx = React.useContext(ElementsContext);
+	  return parseElementsContext(ctx, useCaseMessage);
+	};
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#useelements-hook
+	 */
+
+	var useElements = function useElements() {
+	  var _useElementsContextWi = useElementsContextWithUseCase('calls useElements()'),
+	      elements = _useElementsContextWi.elements;
+
+	  return elements;
+	};
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#usestripe-hook
+	 */
+
+	var useStripe = function useStripe() {
+	  var _useElementsContextWi2 = useElementsContextWithUseCase('calls useStripe()'),
+	      stripe = _useElementsContextWi2.stripe;
+
+	  return stripe;
+	};
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#elements-consumer
+	 */
+
+	var ElementsConsumer = function ElementsConsumer(_ref2) {
+	  var children = _ref2.children;
+	  var ctx = useElementsContextWithUseCase('mounts <ElementsConsumer>'); // Assert to satisfy the busted React.FC return type (it should be ReactNode)
+
+	  return children(ctx);
+	};
+	ElementsConsumer.propTypes = {
+	  children: propTypes.func.isRequired
+	};
+
+	var useCallbackReference = function useCallbackReference(cb) {
+	  var ref = React.useRef(cb);
+	  React.useEffect(function () {
+	    ref.current = cb;
+	  }, [cb]);
+	  return function () {
+	    if (ref.current) {
+	      ref.current.apply(ref, arguments);
+	    }
+	  };
+	};
+
+	var noop = function noop() {};
+
+	var capitalized = function capitalized(str) {
+	  return str.charAt(0).toUpperCase() + str.slice(1);
+	};
+
+	var createElementComponent = function createElementComponent(type, isServer) {
+	  var displayName = "".concat(capitalized(type), "Element");
+
+	  var ClientElement = function ClientElement(_ref) {
+	    var id = _ref.id,
+	        className = _ref.className,
+	        _ref$options = _ref.options,
+	        options = _ref$options === void 0 ? {} : _ref$options,
+	        _ref$onBlur = _ref.onBlur,
+	        onBlur = _ref$onBlur === void 0 ? noop : _ref$onBlur,
+	        _ref$onFocus = _ref.onFocus,
+	        onFocus = _ref$onFocus === void 0 ? noop : _ref$onFocus,
+	        _ref$onReady = _ref.onReady,
+	        onReady = _ref$onReady === void 0 ? noop : _ref$onReady,
+	        _ref$onChange = _ref.onChange,
+	        onChange = _ref$onChange === void 0 ? noop : _ref$onChange,
+	        _ref$onEscape = _ref.onEscape,
+	        onEscape = _ref$onEscape === void 0 ? noop : _ref$onEscape,
+	        _ref$onClick = _ref.onClick,
+	        onClick = _ref$onClick === void 0 ? noop : _ref$onClick;
+
+	    var _useElementsContextWi = useElementsContextWithUseCase("mounts <".concat(displayName, ">")),
+	        elements = _useElementsContextWi.elements;
+
+	    var elementRef = React.useRef(null);
+	    var domNode = React.useRef(null);
+	    var callOnReady = useCallbackReference(onReady);
+	    var callOnBlur = useCallbackReference(onBlur);
+	    var callOnFocus = useCallbackReference(onFocus);
+	    var callOnClick = useCallbackReference(onClick);
+	    var callOnChange = useCallbackReference(onChange);
+	    var callOnEscape = useCallbackReference(onEscape);
+	    React.useLayoutEffect(function () {
+	      if (elementRef.current == null && elements && domNode.current != null) {
+	        var element = elements.create(type, options);
+	        elementRef.current = element;
+	        element.mount(domNode.current);
+	        element.on('ready', function () {
+	          return callOnReady(element);
+	        });
+	        element.on('change', callOnChange);
+	        element.on('blur', callOnBlur);
+	        element.on('focus', callOnFocus);
+	        element.on('escape', callOnEscape); // Users can pass an an onClick prop on any Element component
+	        // just as they could listen for the `click` event on any Element,
+	        // but only the PaymentRequestButton will actually trigger the event.
+
+	        element.on('click', callOnClick);
+	      }
+	    });
+	    var prevOptions = usePrevious(options);
+	    React.useEffect(function () {
+	      if (!elementRef.current) {
+	        return;
+	      }
+
+	      var updates = extractAllowedOptionsUpdates(options, prevOptions, ['paymentRequest']);
+
+	      if (updates) {
+	        elementRef.current.update(updates);
+	      }
+	    }, [options, prevOptions]);
+	    React.useLayoutEffect(function () {
+	      return function () {
+	        if (elementRef.current) {
+	          elementRef.current.destroy();
+	        }
+	      };
+	    }, []);
+	    return /*#__PURE__*/React.createElement("div", {
+	      id: id,
+	      className: className,
+	      ref: domNode
+	    });
+	  }; // Only render the Element wrapper in a server environment.
+
+
+	  var ServerElement = function ServerElement(props) {
+	    // Validate that we are in the right context by calling useElementsContextWithUseCase.
+	    useElementsContextWithUseCase("mounts <".concat(displayName, ">"));
+	    var id = props.id,
+	        className = props.className;
+	    return /*#__PURE__*/React.createElement("div", {
+	      id: id,
+	      className: className
+	    });
+	  };
+
+	  var Element = isServer ? ServerElement : ClientElement;
+	  Element.propTypes = {
+	    id: propTypes.string,
+	    className: propTypes.string,
+	    onChange: propTypes.func,
+	    onBlur: propTypes.func,
+	    onFocus: propTypes.func,
+	    onReady: propTypes.func,
+	    onClick: propTypes.func,
+	    options: propTypes.object
+	  };
+	  Element.displayName = displayName;
+	  Element.__elementType = type;
+	  return Element;
+	};
+
+	var isServer = typeof window === 'undefined';
+	/**
+	 * Requires beta access:
+	 * Contact [Stripe support](https://support.stripe.com/) for more information.
+	 *
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var AuBankAccountElement = createElementComponent('auBankAccount', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var CardElement = createElementComponent('card', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var CardNumberElement = createElementComponent('cardNumber', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var CardExpiryElement = createElementComponent('cardExpiry', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var CardCvcElement = createElementComponent('cardCvc', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var FpxBankElement = createElementComponent('fpxBank', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var IbanElement = createElementComponent('iban', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var IdealBankElement = createElementComponent('idealBank', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var P24BankElement = createElementComponent('p24Bank', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var EpsBankElement = createElementComponent('epsBank', isServer);
+	var PaymentElement = createElementComponent('payment', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var PaymentRequestButtonElement = createElementComponent('paymentRequestButton', isServer);
+	/**
+	 * Requires beta access:
+	 * Contact [Stripe support](https://support.stripe.com/) for more information.
+	 *
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var LinkAuthenticationElement = createElementComponent('linkAuthentication', isServer);
+	/**
+	 * Requires beta access:
+	 * Contact [Stripe support](https://support.stripe.com/) for more information.
+	 *
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var ShippingAddressElement = createElementComponent('shippingAddress', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var AffirmMessageElement = createElementComponent('affirmMessage', isServer);
+	/**
+	 * @docs https://stripe.com/docs/stripe-js/react#element-components
+	 */
+
+	var AfterpayClearpayMessageElement = createElementComponent('afterpayClearpayMessage', isServer);
+
+	exports.AffirmMessageElement = AffirmMessageElement;
+	exports.AfterpayClearpayMessageElement = AfterpayClearpayMessageElement;
+	exports.AuBankAccountElement = AuBankAccountElement;
+	exports.CardCvcElement = CardCvcElement;
+	exports.CardElement = CardElement;
+	exports.CardExpiryElement = CardExpiryElement;
+	exports.CardNumberElement = CardNumberElement;
+	exports.Elements = Elements;
+	exports.ElementsConsumer = ElementsConsumer;
+	exports.EpsBankElement = EpsBankElement;
+	exports.FpxBankElement = FpxBankElement;
+	exports.IbanElement = IbanElement;
+	exports.IdealBankElement = IdealBankElement;
+	exports.LinkAuthenticationElement = LinkAuthenticationElement;
+	exports.P24BankElement = P24BankElement;
+	exports.PaymentElement = PaymentElement;
+	exports.PaymentRequestButtonElement = PaymentRequestButtonElement;
+	exports.ShippingAddressElement = ShippingAddressElement;
+	exports.useElements = useElements;
+	exports.useStripe = useStripe;
+
+	Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+
+/***/ }),
+
+/***/ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@stripe/stripe-js/dist/stripe.esm.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "loadStripe": () => (/* binding */ loadStripe)
+/* harmony export */ });
+var V3_URL = 'https://js.stripe.com/v3';
+var V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
+var EXISTING_SCRIPT_MESSAGE = 'loadStripe.setLoadParameters was called but an existing Stripe.js script already exists in the document; existing script parameters will be used';
+var findScript = function findScript() {
+  var scripts = document.querySelectorAll("script[src^=\"".concat(V3_URL, "\"]"));
+
+  for (var i = 0; i < scripts.length; i++) {
+    var script = scripts[i];
+
+    if (!V3_URL_REGEX.test(script.src)) {
+      continue;
+    }
+
+    return script;
+  }
+
+  return null;
+};
+
+var injectScript = function injectScript(params) {
+  var queryString = params && !params.advancedFraudSignals ? '?advancedFraudSignals=false' : '';
+  var script = document.createElement('script');
+  script.src = "".concat(V3_URL).concat(queryString);
+  var headOrBody = document.head || document.body;
+
+  if (!headOrBody) {
+    throw new Error('Expected document.body not to be null. Stripe.js requires a <body> element.');
+  }
+
+  headOrBody.appendChild(script);
+  return script;
+};
+
+var registerWrapper = function registerWrapper(stripe, startTime) {
+  if (!stripe || !stripe._registerWrapper) {
+    return;
+  }
+
+  stripe._registerWrapper({
+    name: 'stripe-js',
+    version: "1.22.0",
+    startTime: startTime
+  });
+};
+
+var stripePromise = null;
+var loadScript = function loadScript(params) {
+  // Ensure that we only attempt to load Stripe.js at most once
+  if (stripePromise !== null) {
+    return stripePromise;
+  }
+
+  stripePromise = new Promise(function (resolve, reject) {
+    if (typeof window === 'undefined') {
+      // Resolve to null when imported server side. This makes the module
+      // safe to import in an isomorphic code base.
+      resolve(null);
+      return;
+    }
+
+    if (window.Stripe && params) {
+      console.warn(EXISTING_SCRIPT_MESSAGE);
+    }
+
+    if (window.Stripe) {
+      resolve(window.Stripe);
+      return;
+    }
+
+    try {
+      var script = findScript();
+
+      if (script && params) {
+        console.warn(EXISTING_SCRIPT_MESSAGE);
+      } else if (!script) {
+        script = injectScript(params);
+      }
+
+      script.addEventListener('load', function () {
+        if (window.Stripe) {
+          resolve(window.Stripe);
+        } else {
+          reject(new Error('Stripe.js not available'));
+        }
+      });
+      script.addEventListener('error', function () {
+        reject(new Error('Failed to load Stripe.js'));
+      });
+    } catch (error) {
+      reject(error);
+      return;
+    }
+  });
+  return stripePromise;
+};
+var initStripe = function initStripe(maybeStripe, args, startTime) {
+  if (maybeStripe === null) {
+    return null;
+  }
+
+  var stripe = maybeStripe.apply(undefined, args);
+  registerWrapper(stripe, startTime);
+  return stripe;
+};
+
+// own script injection.
+
+var stripePromise$1 = Promise.resolve().then(function () {
+  return loadScript(null);
+});
+var loadCalled = false;
+stripePromise$1["catch"](function (err) {
+  if (!loadCalled) {
+    console.warn(err);
+  }
+});
+var loadStripe = function loadStripe() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  loadCalled = true;
+  var startTime = Date.now();
+  return stripePromise$1.then(function (maybeStripe) {
+    return initStripe(maybeStripe, args, startTime);
+  });
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -4485,6 +5357,11 @@ __webpack_require__.r(__webpack_exports__);
 function Register() {
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_6__.useForm)({
     name: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
     email: '',
     password: '',
     password_confirmation: ''
@@ -4519,6 +5396,7 @@ function Register() {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
       onSubmit: submit,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "pb-4 border-b",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_4__["default"], {
           forInput: "name",
           value: "Name"
@@ -4526,8 +5404,67 @@ function Register() {
           type: "text",
           name: "name",
           value: data.name,
-          className: "mt-1 block w-full",
+          className: "mt-1 mb-4 block w-full",
           autoComplete: "name",
+          isFocused: true,
+          handleChange: onHandleChange,
+          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          forInput: "address1",
+          value: "Address 1"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          type: "text",
+          name: "address1",
+          value: data.address1,
+          className: "mt-1 mb-4 block w-full",
+          autoComplete: "address1",
+          isFocused: true,
+          handleChange: onHandleChange,
+          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          forInput: "address2",
+          value: "Address 2"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          type: "text",
+          name: "address2",
+          value: data.address2,
+          className: "mt-1 mb-4 block w-full",
+          autoComplete: "address2",
+          isFocused: true,
+          handleChange: onHandleChange
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          forInput: "city",
+          value: "City"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          type: "text",
+          name: "city",
+          value: data.city,
+          className: "mt-1 mb-4 block w-full",
+          autoComplete: "city",
+          isFocused: true,
+          handleChange: onHandleChange,
+          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          forInput: "state",
+          value: "State"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          type: "text",
+          name: "state",
+          value: data.state,
+          className: "mt-1 mb-4 block w-full",
+          autoComplete: "state",
+          isFocused: true,
+          handleChange: onHandleChange,
+          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          forInput: "zip",
+          value: "Zip"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          type: "text",
+          name: "zip",
+          value: data.zip,
+          className: "mt-1 mb-4 block w-full",
+          autoComplete: "zip",
           isFocused: true,
           handleChange: onHandleChange,
           required: true
@@ -4836,9 +5773,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-/* harmony import */ var _Components_Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Components/Navbar */ "./resources/js/Components/Navbar.js");
-/* harmony import */ var _Components_Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/Footer */ "./resources/js/Components/Footer.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @stripe/react-stripe-js */ "./node_modules/@stripe/react-stripe-js/dist/react-stripe.umd.js");
+/* harmony import */ var _stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js");
+/* harmony import */ var _Components_Navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Components/Navbar */ "./resources/js/Components/Navbar.js");
+/* harmony import */ var _Components_Footer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Components/Footer */ "./resources/js/Components/Footer.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -4865,57 +5805,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
+
 var formReducer = function formReducer(state, event) {
   return _objectSpread(_objectSpread({}, state), {}, _defineProperty({}, event.target.name, event.target.value));
 };
 
-var Profile = function Profile(_ref) {
-  var account = _ref.account,
-      user = _ref.user,
-      errors = _ref.errors;
-  console.log(account);
+var stripePromise = function stripePromise(_ref) {
+  var app = _ref.app;
+  return (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_3__.loadStripe)(app.stripe_publishable_key);
+};
+
+var Profile = function Profile(_ref2) {
+  var account = _ref2.account,
+      user = _ref2.user,
+      errors = _ref2.errors,
+      client_secret = _ref2.client_secret;
 
   var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useReducer)(formReducer, {}),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       data = _useReducer2[0],
       setData = _useReducer2[1];
 
+  var options = {
+    clientSecret: client_secret
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log(data);
     _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__.Inertia.post(route('send-money'), data, {
-      onSuccess: function onSuccess(_ref2) {
-        var props = _ref2.props;
+      onSuccess: function onSuccess(_ref3) {
+        var props = _ref3.props;
         console.log(props);
       }
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_Navbar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"], {
       transparent: true
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("main", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("main", {
       className: "profile-page",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("section", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("section", {
         className: "relative block",
         style: {
           height: "500px"
         },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "absolute top-0 w-full h-full bg-center bg-cover",
           style: {
             backgroundImage: "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')"
           },
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
             id: "blackOverlay",
             className: "w-full h-full absolute opacity-50 bg-black"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden",
           style: {
             height: "70px"
           },
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("svg", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("svg", {
             className: "absolute bottom-0 overflow-hidden",
             xmlns: "http://www.w3.org/2000/svg",
             preserveAspectRatio: "none",
@@ -4923,27 +5875,27 @@ var Profile = function Profile(_ref) {
             viewBox: "0 0 2560 100",
             x: "0",
             y: "0",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("polygon", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("polygon", {
               className: "text-gray-300 fill-current",
               points: "2560 0 2560 100 0 100"
             })
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("section", {
         className: "relative py-16 bg-gray-300",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "container mx-auto px-4",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
             className: "relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               className: "px-6",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: "flex flex-wrap justify-center",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                   className: "w-full lg:w-3/12 px-4 lg:order-2 flex justify-center",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                     className: "relative",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
                       alt: "...",
                       src: "https://picsum.photos/400",
                       className: "shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16",
@@ -4953,40 +5905,51 @@ var Profile = function Profile(_ref) {
                     })
                   })
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: "text-center mt-24",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
                   className: "text-4xl font-semibold leading-normal mb-2 text-gray-800",
                   children: user.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   className: "text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
                     className: "fas fa-map-marker-alt mr-2 text-lg text-gray-500"
-                  }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                  }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
                     children: "Balance:"
                   }), " $", account.balance]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: "mt-10 py-10 border-t border-gray-300",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.Elements, {
+                  stripe: stripePromise,
+                  options: options,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.PaymentElement, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                      children: "Submit"
+                    })]
+                  })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: "mt-10 py-10 border-t border-gray-300 text-center",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                   className: "flex justify-center",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
                     className: "w-full max-w-sm",
                     onSubmit: handleSubmit,
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                       className: "mb-6",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                         className: "md:flex md:items-center",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                           className: "md:w-1/3",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
                             className: "block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4",
                             htmlFor: "inline-full-name",
                             children: "Email"
                           })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                           className: "md:w-2/3",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                             className: "".concat(Object.keys(errors).length > 0 && errors.email ? 'border-red-500' : 'border-gray-200', " bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"),
                             type: "text",
                             name: "email",
@@ -4994,27 +5957,27 @@ var Profile = function Profile(_ref) {
                             onChange: setData
                           })
                         })]
-                      }), Object.keys(errors).length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                      }), Object.keys(errors).length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                         className: "font-medium tracking-wide text-red-500 text-xs mt-1 ml-1",
                         children: errors.email
                       }) : null]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                       className: "mb-6",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                         className: "md:flex md:items-center",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                           className: "md:w-1/3",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
                             className: "block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4",
                             htmlFor: "inline-password",
                             children: "Amount"
                           })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                           className: "md:w-2/3 flex",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                             className: "leading-10 mr-2",
                             children: "$"
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                             className: "".concat(Object.keys(errors).length > 0 && errors.amount ? 'border-red-500' : 'border-gray-200', " bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"),
                             type: "text",
                             name: "amount",
@@ -5022,17 +5985,17 @@ var Profile = function Profile(_ref) {
                             onChange: setData
                           })]
                         })]
-                      }), Object.keys(errors).length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                      }), Object.keys(errors).length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                         className: "font-medium tracking-wide text-red-500 text-xs mt-1 ml-1",
                         children: errors.amount
                       }) : null]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                       className: "md:flex md:items-center",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                         className: "md:w-1/3"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                         className: "md:w-2/3",
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                           className: "shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
                           type: "submit",
                           children: "Send"
@@ -5046,7 +6009,7 @@ var Profile = function Profile(_ref) {
           })
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_Footer__WEBPACK_IMPORTED_MODULE_3__["default"], {})]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], {})]
   });
 };
 
@@ -58689,6 +59652,18 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

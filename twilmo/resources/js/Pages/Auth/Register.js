@@ -9,6 +9,11 @@ import { Head, Link, useForm } from '@inertiajs/inertia-react';
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: '',
         email: '',
         password: '',
         password_confirmation: '',
@@ -37,19 +42,85 @@ export default function Register() {
             <ValidationErrors errors={errors} />
 
             <form onSubmit={submit}>
-                <div>
+                <div className="pb-4 border-b">
                     <Label forInput="name" value="Name" />
 
                     <Input
                         type="text"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="mt-1 mb-4 block w-full"
                         autoComplete="name"
                         isFocused={true}
                         handleChange={onHandleChange}
                         required
                     />
+
+                    <Label forInput="address1" value="Address 1" />
+
+                    <Input
+                        type="text"
+                        name="address1"
+                        value={data.address1}
+                        className="mt-1 mb-4 block w-full"
+                        autoComplete="address1"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                        required
+                    />
+
+                    <Label forInput="address2" value="Address 2" />
+
+                    <Input
+                        type="text"
+                        name="address2"
+                        value={data.address2}
+                        className="mt-1 mb-4 block w-full"
+                        autoComplete="address2"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                    />
+
+                    <Label forInput="city" value="City" />
+
+                    <Input
+                        type="text"
+                        name="city"
+                        value={data.city}
+                        className="mt-1 mb-4 block w-full"
+                        autoComplete="city"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                        required
+                    />
+
+                    <Label forInput="state" value="State" />
+
+                    <Input
+                        type="text"
+                        name="state"
+                        value={data.state}
+                        className="mt-1 mb-4 block w-full"
+                        autoComplete="state"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                        required
+                    />
+
+                    <Label forInput="zip" value="Zip" />
+
+                    <Input
+                        type="text"
+                        name="zip"
+                        value={data.zip}
+                        className="mt-1 mb-4 block w-full"
+                        autoComplete="zip"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                        required
+                    />
+
+
                 </div>
 
                 <div className="mt-4">

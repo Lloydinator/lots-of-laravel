@@ -17,6 +17,12 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->nullable(false)->unique()->unsigned();
             $table->float('balance', 8, 2)->nullable(false)->default(0);
+            $table->string('customer_id')->nullable(false)->unique();
+            $table->string('address1')->nullable(false);
+            $table->string('address2')->nullable();
+            $table->string('city')->nullable(false);
+            $table->string('state')->nullable(false);
+            $table->string('zip')->nullable(false);
             $table->timestamps();
         });
     }

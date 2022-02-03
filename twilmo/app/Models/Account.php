@@ -9,7 +9,10 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'balance'];
+    protected $fillable = [
+        'user_id', 'balance', 'customer_id', 'address1', 'address2',
+        'city', 'state', 'zip'
+    ];
 
     protected $casts = ['balance' => 'decimal:2'];
     
