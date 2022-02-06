@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,10 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Inertia::share('app', function(){
-            return [
-                'stripe_publishable_key' => env('STRIPE_PUBLISHABLE_KEY')
-            ];
-        });
+        //
     }
 }

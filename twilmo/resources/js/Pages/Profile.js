@@ -2,9 +2,9 @@ import React, { useReducer } from 'react'
 import { Inertia } from '@inertiajs/inertia'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
-import {PaymentElement} from '@stripe/react-stripe-js';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
+import SetupForm from '../Components/SetupForm'
 
 const formReducer = (state, event) => {
   return {
@@ -13,14 +13,14 @@ const formReducer = (state, event) => {
   }
 }
 
-const stripePromise = ({ app }) => loadStripe(app.stripe_publishable_key)
+const stripePromise = loadStripe(process.env.MIX_STRIPE_PUBLISHABLE_KEY)
 
-const Profile = ({ account, user, errors, client_secret }) => {
+const Profile = ({ account, user, errors, client_secret, payment_method }) => {
   const [data, setData] = useReducer(formReducer, {})
-
   const options = {
-    clientSecret: client_secret
+    clientSecret: client_secret,
   }
+  console.log(Object.keys(payment_method.data).length)
 
   function handleSubmit(e){
     e.preventDefault()
@@ -95,78 +95,81 @@ const Profile = ({ account, user, errors, client_secret }) => {
                         <strong>Balance:</strong> ${ account.balance } 
                   </div>
                 </div>
-                <div className="mt-10 py-10 border-t border-gray-300">
-                  <Elements stripe={stripePromise} options={options}>
-                    <form>
-                      <PaymentElement />
-                      <button>Submit</button>
-                    </form>
-                  </Elements>
-                </div>
-                <div className="mt-10 py-10 border-t border-gray-300 text-center">
-                    <div className="flex justify-center">
-                        <form className="w-full max-w-sm" onSubmit={handleSubmit}>
-                            <div className="mb-6">
-                                <div className="md:flex md:items-center">
-                                  <div className="md:w-1/3">
-                                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                                      Email
-                                  </label>
-                                  </div>
-                                  <div className="md:w-2/3">
-                                      <input 
-                                        className={`${Object.keys(errors).length > 0 && errors.email ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
-                                        type="text" 
-                                        name="email" 
-                                        placeholder="person@example.net" 
-                                        onChange={setData}
-                                      />
-                                  </div>
-                                </div>
-                                {Object.keys(errors).length > 0 ?
-                                  (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                    { errors.email }
-                                  </span>) : null
-                                }
-                            </div>
-                            <div className="mb-6">
-                                <div className="md:flex md:items-center">
-                                  <div className="md:w-1/3">
-                                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
-                                      Amount
-                                  </label>
-                                  </div>
-                                  <div className="md:w-2/3 flex">
-                                      <span className="leading-10 mr-2">$</span>
-                                      <input 
-                                        className={`${Object.keys(errors).length > 0 && errors.amount ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
-                                        type="text" 
-                                        name="amount" 
-                                        placeholder="3.00"
-                                        onChange={setData}
-                                      />
-                                  </div>
-                                </div>
-                                {Object.keys(errors).length > 0 ?
-                                  (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                    { errors.amount }
-                                  </span>) : null
-                                }
-                            </div>
-                            <div className="md:flex md:items-center">
-                                <div className="md:w-1/3"></div>
-                                <div className="md:w-2/3">
-                                <button 
-                                  className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
-                                  type="submit"
-                                >
-                                    Send
-                                </button>
-                                </div>
-                            </div>
-                        </form>
+                {Object.keys(payment_method.data).length === 0 ? 
+                  (
+                    <div className="mt-10 py-10 border-t border-gray-300">
+                      <Elements stripe={stripePromise} options={options}>
+                          <SetupForm />
+                      </Elements>
                     </div>
-                </div>
+                  ) :
+                  (
+                    <div className="mt-10 py-10 border-t border-gray-300 text-center">
+                      <div className="flex justify-center">
+                          <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+                              <div className="mb-6">
+                                  <div className="md:flex md:items-center">
+                                    <div className="md:w-1/3">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                                        Email
+                                    </label>
+                                    </div>
+                                    <div className="md:w-2/3">
+                                        <input 
+                                          className={`${Object.keys(errors).length > 0 && errors.email ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                          type="text" 
+                                          name="email" 
+                                          placeholder="person@example.net" 
+                                          onChange={setData}
+                                        />
+                                    </div>
+                                  </div>
+                                  {Object.keys(errors).length > 0 ?
+                                    (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                      { errors.email }
+                                    </span>) : null
+                                  }
+                              </div>
+                              <div className="mb-6">
+                                  <div className="md:flex md:items-center">
+                                    <div className="md:w-1/3">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
+                                        Amount
+                                    </label>
+                                    </div>
+                                    <div className="md:w-2/3 flex">
+                                        <span className="leading-10 mr-2">$</span>
+                                        <input 
+                                          className={`${Object.keys(errors).length > 0 && errors.amount ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                          type="text" 
+                                          name="amount" 
+                                          placeholder="3.00"
+                                          onChange={setData}
+                                        />
+                                    </div>
+                                  </div>
+                                  {Object.keys(errors).length > 0 ?
+                                    (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                      { errors.amount }
+                                    </span>) : null
+                                  }
+                              </div>
+                              <div className="md:flex md:items-center">
+                                  <div className="md:w-1/3"></div>
+                                  <div className="md:w-2/3">
+                                  <button 
+                                    className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
+                                    type="submit"
+                                  >
+                                      Send
+                                  </button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                    </div>
+                  )
+                }
               </div>
             </div>
           </div>

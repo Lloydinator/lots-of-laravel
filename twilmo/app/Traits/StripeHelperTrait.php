@@ -20,6 +20,15 @@ trait StripeHelperTrait {
         return $customer;
     }
 
+    // Get customer
+    function getPaymentMethods($customer_id)
+    {
+        $customer = \Stripe\PaymentMethod::all(
+            ['customer' => $customer_id, 'type' => 'card']
+        );
+        return $customer;
+    }
+
     function createSetupIntent($customer_id)
     {
         $intent = \Stripe\SetupIntent::create([
