@@ -36,7 +36,7 @@ class TransactionRequest extends FormRequest
     {
         $validator->after(function ($validator){
             if ($this->lowBalance()){
-                $validator->errors->add('amount', 'Your balance is too low to send this amount.');
+                $validator->errors()->add('amount', 'Your balance is too low to send this amount.');
             }
         });
     }

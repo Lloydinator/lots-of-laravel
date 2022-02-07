@@ -10,7 +10,7 @@ use App\Traits\StripeHelperTrait;
 class TransactionController extends Controller
 {
     use StripeHelperTrait;
-    
+
     public function store(TransactionRequest $request)
     {
         $validated = $request->validated();
@@ -38,9 +38,7 @@ class TransactionController extends Controller
         $user_to->account->balance = $user_to->account->balance + $validated['amount'];
 
         if ($user_from->push() && $user_to->push()){
-            return redirect()->back()->with([
-                'message' => 'Success!'
-            ]);
+            return redirect()->back();
         }
     }
 }
