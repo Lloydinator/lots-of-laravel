@@ -34,4 +34,5 @@ Route::get('/profile', [AccountController::class, 'index'])
     ->middleware(['auth', 'verified'])->name('profile');
 Route::post('/send-money', [TransactionController::class, 'store'])
 ->middleware(['auth', 'verified'])->name('send-money');
+
 require __DIR__.'/auth.php';

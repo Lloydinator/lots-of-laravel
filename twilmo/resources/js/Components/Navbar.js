@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
 
 const Navbar = props => {
-  const [navbarOpen, setNavbarOpen] = useState(false)
-
   return (
     <>
       <nav
@@ -24,18 +22,6 @@ const Navbar = props => {
             >
               TWILMO
             </a>
-            <button
-              className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-            >
-              <i
-                className={
-                  (props.transparent ? "text-white" : "text-gray-800") +
-                  " fas fa-bars"
-                }
-              ></i>
-            </button>
           </div>
         </div>
       </nav>

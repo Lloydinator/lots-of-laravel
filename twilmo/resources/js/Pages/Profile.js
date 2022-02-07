@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import { Inertia } from '@inertiajs/inertia'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
@@ -16,6 +16,7 @@ const stripePromise = loadStripe(process.env.MIX_STRIPE_PUBLISHABLE_KEY)
 
 const Profile = ({ account, user, errors, client_secret, payment_method }) => {
   const [data, setData] = useReducer(formReducer, {})
+  const [success, setSuccess] = useState('')
   const options = {
     clientSecret: client_secret,
   }
@@ -25,7 +26,7 @@ const Profile = ({ account, user, errors, client_secret, payment_method }) => {
 
     Inertia.post(route('send-money'), data, {
       onSuccess: ({props}) => {
-        console.log(props)
+        setSuccess('Success!');
       }
     })
   }
@@ -111,6 +112,7 @@ const Profile = ({ account, user, errors, client_secret, payment_method }) => {
                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                   <div className="flex justify-center">
                       <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+                          {success && <p className="mb-6 text-green-700 font-bold">{ success }</p>}
                           <div className="mb-6">
                               <div className="md:flex md:items-center">
                                 <div className="md:w-1/3">
@@ -158,16 +160,13 @@ const Profile = ({ account, user, errors, client_secret, payment_method }) => {
                                 </span>) : null
                               }
                           </div>
-                          <div className="md:flex md:items-center">
-                              <div className="md:w-1/3"></div>
-                              <div className="md:w-2/3">
+                          <div className="flex justify-center">
                               <button 
                                 className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
                                 type="submit"
                               >
                                   Send
                               </button>
-                              </div>
                           </div>
                       </form>
                   </div>
