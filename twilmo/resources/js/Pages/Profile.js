@@ -3,7 +3,6 @@ import { Inertia } from '@inertiajs/inertia'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
 import Navbar from '../Components/Navbar'
-import Footer from '../Components/Footer'
 import SetupForm from '../Components/SetupForm'
 
 const formReducer = (state, event) => {
@@ -20,12 +19,10 @@ const Profile = ({ account, user, errors, client_secret, payment_method }) => {
   const options = {
     clientSecret: client_secret,
   }
-  console.log(Object.keys(payment_method.data).length)
 
   function handleSubmit(e){
     e.preventDefault()
 
-    console.log(data)
     Inertia.post(route('send-money'), data, {
       onSuccess: ({props}) => {
         console.log(props)
@@ -97,85 +94,89 @@ const Profile = ({ account, user, errors, client_secret, payment_method }) => {
                 </div>
                 {Object.keys(payment_method.data).length === 0 ? 
                   (
-                    <div className="mt-10 py-10 border-t border-gray-300">
-                      <Elements stripe={stripePromise} options={options}>
-                          <SetupForm />
-                      </Elements>
+                    <div className="mt-10 py-10 border-t border-gray-300 flex justify-center">
+                      <div className="w-1/2">
+                        <Elements stripe={stripePromise} options={options}>
+                            <SetupForm />
+                        </Elements>
+                      </div>
                     </div>
                   ) :
                   (
-                    <div className="mt-10 py-10 border-t border-gray-300 text-center">
-                      <div className="flex justify-center">
-                          <form className="w-full max-w-sm" onSubmit={handleSubmit}>
-                              <div className="mb-6">
-                                  <div className="md:flex md:items-center">
-                                    <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                                        Email
-                                    </label>
-                                    </div>
-                                    <div className="md:w-2/3">
-                                        <input 
-                                          className={`${Object.keys(errors).length > 0 && errors.email ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
-                                          type="text" 
-                                          name="email" 
-                                          placeholder="person@example.net" 
-                                          onChange={setData}
-                                        />
-                                    </div>
-                                  </div>
-                                  {Object.keys(errors).length > 0 ?
-                                    (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                      { errors.email }
-                                    </span>) : null
-                                  }
-                              </div>
-                              <div className="mb-6">
-                                  <div className="md:flex md:items-center">
-                                    <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
-                                        Amount
-                                    </label>
-                                    </div>
-                                    <div className="md:w-2/3 flex">
-                                        <span className="leading-10 mr-2">$</span>
-                                        <input 
-                                          className={`${Object.keys(errors).length > 0 && errors.amount ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
-                                          type="text" 
-                                          name="amount" 
-                                          placeholder="3.00"
-                                          onChange={setData}
-                                        />
-                                    </div>
-                                  </div>
-                                  {Object.keys(errors).length > 0 ?
-                                    (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                                      { errors.amount }
-                                    </span>) : null
-                                  }
-                              </div>
-                              <div className="md:flex md:items-center">
-                                  <div className="md:w-1/3"></div>
-                                  <div className="md:w-2/3">
-                                  <button 
-                                    className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
-                                    type="submit"
-                                  >
-                                      Send
-                                  </button>
-                                  </div>
-                              </div>
-                          </form>
-                      </div>
+                    <div className="mt-10 py-10 border-t border-gray-300">
+                      <div className="text-center">Card available</div>
                     </div>
                   )
                 }
+                <div className="mt-10 py-10 border-t border-gray-300 text-center">
+                  <div className="flex justify-center">
+                      <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+                          <div className="mb-6">
+                              <div className="md:flex md:items-center">
+                                <div className="md:w-1/3">
+                                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                                    Email
+                                </label>
+                                </div>
+                                <div className="md:w-2/3">
+                                    <input 
+                                      className={`${Object.keys(errors).length > 0 && errors.email ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                      type="text" 
+                                      name="email" 
+                                      placeholder="person@example.net" 
+                                      onChange={setData}
+                                    />
+                                </div>
+                              </div>
+                              {Object.keys(errors).length > 0 ?
+                                (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                  { errors.email }
+                                </span>) : null
+                              }
+                          </div>
+                          <div className="mb-6">
+                              <div className="md:flex md:items-center">
+                                <div className="md:w-1/3">
+                                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
+                                    Amount
+                                </label>
+                                </div>
+                                <div className="md:w-2/3 flex">
+                                    <span className="leading-10 mr-2">$</span>
+                                    <input 
+                                      className={`${Object.keys(errors).length > 0 && errors.amount ? 'border-red-500' : 'border-gray-200'} bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`} 
+                                      type="text" 
+                                      name="amount" 
+                                      placeholder="3.00"
+                                      onChange={setData}
+                                    />
+                                </div>
+                              </div>
+                              {Object.keys(errors).length > 0 ?
+                                (<span className="font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                  { errors.amount }
+                                </span>) : null
+                              }
+                          </div>
+                          <div className="md:flex md:items-center">
+                              <div className="md:w-1/3"></div>
+                              <div className="md:w-2/3">
+                              <button 
+                                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
+                                type="submit"
+                              >
+                                  Send
+                              </button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }
