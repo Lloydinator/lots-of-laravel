@@ -26,7 +26,7 @@ const Profile = ({ account, user, errors, client_secret, payment_method }) => {
 
     Inertia.post(route('send-money'), data, {
       onSuccess: ({props}) => {
-        setSuccess('Success!');
+        setSuccess('Success!')
       }
     })
   }

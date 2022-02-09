@@ -4657,7 +4657,7 @@ var SetupForm = function SetupForm() {
               if (response.error) {
                 setErrorMessage(response.error.message);
               } else {
-                console.log(response);
+                window.location.reload(true);
               }
 
             case 7:

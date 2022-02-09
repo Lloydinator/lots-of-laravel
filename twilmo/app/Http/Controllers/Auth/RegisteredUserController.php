@@ -40,13 +40,13 @@ class RegisteredUserController extends Controller
     {
         $request->validated();
 
+        $customer = $this->createCustomer($request->email, $request->name);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        $customer = $this->createCustomer($request->email, $request->name);
 
         Account::create([
             'user_id' => $user->id,

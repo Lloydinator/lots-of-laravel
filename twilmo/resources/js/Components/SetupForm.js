@@ -28,7 +28,7 @@ const SetupForm = () => {
             setErrorMessage(response.error.message)
         }
         else {
-            console.log(response)
+            window.location.reload(true)
         }
     }
     return (

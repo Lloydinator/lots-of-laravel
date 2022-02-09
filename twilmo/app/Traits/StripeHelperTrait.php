@@ -36,10 +36,7 @@ trait StripeHelperTrait {
 
     function useCard($customer_id, $amount)
     {
-        $card = \Stripe\PaymentMethod::all([
-            'customer' => $customer_id,
-            'type' => 'card'
-        ]);
+        $card = $this->getPaymentMethods($customer_id);
 
         try {
             \Stripe\PaymentIntent::create([
