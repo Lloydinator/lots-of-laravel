@@ -21,7 +21,7 @@ class AccountController extends Controller
         return Inertia::render('Profile', [
             'user' => User::find(auth()->user()->id),
             'account' => $account,
-            'client_secret' => $secret,
+
             'payment_method' => $payment_method
         ]);
     }
