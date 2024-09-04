@@ -1,0 +1,5 @@
+SELECT 'CREATE DATABASE testing'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'testing')\gexec
+
+GRANT ALL PRIVILEGES ON  *.* TO 'sail'@'%';
+FLUSH PRIVILEGES;
