@@ -19,14 +19,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -44,27 +36,21 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $task = Task::find($id);
+
+        $validated = $request->validate([
+            'task_name' => 'required|string|max:255'
+        ]);
+
+        $task->forceFill($validated);
+
+        if ($task->update($validated)) {
+            return response()->json(['success' => true]);
+        }
     }
 
     /**
@@ -73,7 +59,8 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         $task = Task::find($id);
-
         $task->delete();
+
+        return response()->json(['success' => true]);
     }
 }
