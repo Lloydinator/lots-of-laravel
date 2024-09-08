@@ -25,7 +25,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $new_count = Task::all()->count() + 1;
+        $new_count = Task::count() + 1;
 
         $validated = $request->merge(['priority' => $new_count])->validate([
             'task_name' => 'required|string|max:255',
@@ -58,7 +58,6 @@ class TaskController extends Controller
             try {
                 DB::transaction(function() use($request, $id) {
                     $current = $request->task_data['draggedPriority'];
-                    $previous = $request->task_data['prevElementPriority'];
 
                     if ($current > $request->task_data['nextElementPriority']) {
                         $new = $request->task_data['nextElementPriority'];
@@ -80,10 +79,7 @@ class TaskController extends Controller
                             ->where('id', '!=', $id)
                             ->increment('priority');
                     } else {
-                        DB::table('tasks')->whereBetween(
-                            'priority', 
-                            [$previous == 0 ? $current, $new]
-                            )
+                        DB::table('tasks')->whereBetween('priority', [$current, $new])
                             ->where('id', '!=', $id)
                             ->decrement('priority');
                     }
@@ -101,16 +97,22 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        $task = Task::find($id);
-        $task->delete();
+        try {
+            $count = Task::count();
+            $task = Task::find($id);
+            $task->delete();
 
-        // Update priority of subsequent record
-        $after = Task::firstWhere('priority', $task->priority + 1);
+            // Update priority of subsequent record
+            if ($count > 1) {
+                DB::table('tasks')->where('priority', '>', 1)
+                    ->decrement('priority');
 
-        if (!$after) return response()->json(['success' => true]);
+                return response()->json(['success' => true]);
+            }
 
-        if ($after->update(['priority' => $task->priority])) {
             return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
     }
 }
