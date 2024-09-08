@@ -27,10 +27,10 @@
                     </button>
                 </div>
             </form>
-            <div aria-label="tasks">
+            <div aria-label="tasks" id="tasks" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragenter="onDragEnter(event)">
                 @isset ($tasks)
                     @foreach ($tasks as $task)
-                        <div class="flex justify-between w-full bg-slate-200 drop-shadow-lg p-4 mb-4 rounded-sm" aria-label="task">
+                        <div class="flex justify-between w-full bg-slate-200 drop-shadow-lg p-4 mb-4 rounded-sm cursor-move drag-item" aria-label="task" data-id="{{ $task->id }}" data-priority="{{ $task->priority }}" draggable="true" ondragstart="onDragStart(event)">
                             <div>
                                 <p id="text-{{ $task->id }}" class="text-sm inline">{{ $task->task_name }}</p>
                                 <input type="text" id="card-{{ $task->id }}" class="hidden w-full px-3 py-2 mb-4 text-gray-700 border rounded-lg focus:outline-none focus:border-lime-500" value="{{ $task->task_name }}"/>
@@ -53,6 +53,7 @@
         </div>
     </body>
     <script>
+        /** UPDATE AND DELETE TASKS */
         document.querySelectorAll('.delete').forEach(button => {
             button.addEventListener('click', deleteTask)
 
@@ -113,7 +114,6 @@
                             }
                         } catch (error) {
                             console.log("Something went wrong: ", error)
-                            alert("Something went wrong! Please try again.")
                         }
                     }
                 })
@@ -153,5 +153,101 @@
             document.getElementById(`pencil-${id}`).classList.remove('hidden')
             document.getElementById(`pencil-${id}`).classList.add('inline')
         }
+        
+    
+        /** DRAG TASKS */
+        function onDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.id)
+            e.target.classList.add('dragging');
+        }
+
+        function onDragOver(e) {
+            e.preventDefault()
+            const draggable = document.querySelector('.dragging')
+            if (!draggable) return
+            const dropzone = e.currentTarget
+            const after = getDropCoordinates(dropzone, e.clientY)
+
+            if (after == null) {
+                dropzone.appendChild(draggable)
+            } else {
+                dropzone.insertBefore(draggable, after)
+            }
+        }
+
+        function onDragEnter(e) {
+            e.preventDefault()
+        }
+
+        function onDrop(e) {
+            e.preventDefault()
+            const draggable = document.querySelector('.dragging')
+            if (draggable) {
+                draggable.classList.remove('dragging')
+
+                const tasksPositionData = {
+                    draggedId: draggable.dataset.id,
+                    draggedPriority: draggable.dataset.priority,
+                    nextElementPriority: draggable.nextElementSibling?.dataset?.priority ?? "{{ $count }}" + 1,
+                    prevElementPriority: draggable.previousElementSibling?.dataset?.priority ?? 0,
+                    count: "{{ $count }}"
+                }
+
+                console.log(tasksPositionData)
+
+                setTimeout(handleUpdatePriority(tasksPositionData), 3000)
+            }
+            e.dataTransfer.clearData()
+        }
+
+        function getDropCoordinates(container, y) {
+            const elements = [...container.querySelectorAll('.drag-item:not(.dragging)')]
+            let closest = null
+            let closestOffset = Number.NEGATIVE_INFINITY
+
+            for (const element of elements) {
+                const box = element.getBoundingClientRect()
+                const offset = y - box.top - box.height / 2
+
+                if (offset < 0 && offset > closestOffset) {
+                    closestOffset = offset
+                    closest = element
+                }
+            }
+
+            return closest
+        }
+
+        async function handleUpdatePriority(data) {
+            try {
+                const response = await fetch(`/tasks/${data.draggedId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        task_data: data,
+                    })
+                })
+                
+                const res = await response.json()
+                if (res.success) {
+                    window.location.reload()
+                }
+            } catch (error) {
+                console.log("Something went wrong: ", error)
+                alert("Something went wrong! Please try again.")
+            }
+        }
+
+        document.addEventListener('DOMCONTENTLoaded', () => {
+            const draggables = document.querySelectorAll('.drag-item')
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging')
+                })
+            })
+        })
     </script>
 </html>

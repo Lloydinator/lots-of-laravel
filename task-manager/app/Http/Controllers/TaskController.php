@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Task;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class TaskController extends Controller
 {
@@ -15,7 +17,7 @@ class TaskController extends Controller
         $tasks = Task::all();
         $count = count($tasks);
 
-        return view('app')->with(['tasks' => $tasks, 'count' => $count]);
+        return view('app')->with(['tasks' => $tasks->sortBy('priority'), 'count' => $count]);
     }
 
     /**
@@ -30,9 +32,9 @@ class TaskController extends Controller
             'priority' => 'required|numeric'
         ]);
 
-        $tasks = Task::create($validated);
+        Task::create($validated);
 
-        return redirect()->back()->with(['tasks' => $tasks, 'count' => $new_count]);
+        return redirect()->back();
     }
 
     /**
@@ -43,14 +45,55 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         $validated = $request->validate([
-            'task_name' => 'required|string|max:255'
+            'task_name' => 'sometimes|required|string|max:255',
+            'task_data' => 'sometimes|required|array',
+            'task_data.*' => 'numeric'
         ]);
 
-        $task->forceFill($validated);
+        if (isset($request->task_name)) {
+            if ($task->update($validated)) {
+                return response()->json(['success' => true]);
+            }
+        } elseif (isset($request->task_data)) {
+            try {
+                DB::transaction(function() use($request, $id) {
+                    $current = $request->task_data['draggedPriority'];
+                    $previous = $request->task_data['prevElementPriority'];
 
-        if ($task->update($validated)) {
+                    if ($current > $request->task_data['nextElementPriority']) {
+                        $new = $request->task_data['nextElementPriority'];
+                        $moved_up = true;
+                    } else {
+                        $new = $request->task_data['prevElementPriority'];
+                        $moved_up = false;
+                    }
+    
+                    $updated_task = DB::table('tasks')->where('priority', $current)
+                        ->update(['priority' => $new]);
+                    
+                    if ($updated_task === 0) {
+                        throw new \Exception("Task wasn't updated: $current");
+                    }
+    
+                    if ($moved_up) {
+                        DB::table('tasks')->whereBetween('priority', [$new, $current - 1])
+                            ->where('id', '!=', $id)
+                            ->increment('priority');
+                    } else {
+                        DB::table('tasks')->whereBetween(
+                            'priority', 
+                            [$previous == 0 ? $current, $new]
+                            )
+                            ->where('id', '!=', $id)
+                            ->decrement('priority');
+                    }
+                });
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+
             return response()->json(['success' => true]);
-        }
+        }        
     }
 
     /**
@@ -61,6 +104,13 @@ class TaskController extends Controller
         $task = Task::find($id);
         $task->delete();
 
-        return response()->json(['success' => true]);
+        // Update priority of subsequent record
+        $after = Task::firstWhere('priority', $task->priority + 1);
+
+        if (!$after) return response()->json(['success' => true]);
+
+        if ($after->update(['priority' => $task->priority])) {
+            return response()->json(['success' => true]);
+        }
     }
 }
